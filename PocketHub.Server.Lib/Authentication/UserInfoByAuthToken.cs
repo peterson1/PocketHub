@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PocketHub.Server.Lib.Authentication
 {
-    public class UserInfoByAuthToken : IRestExportView
+    public class UserInfoByAuthToken : IRestExportView, IUserInfo
     {
         public string DisplayPath => "verify-auth-token";
 
@@ -15,7 +15,7 @@ namespace PocketHub.Server.Lib.Authentication
         public string   AllRoles  { get; set; }
 
 
-        public List<string> Roles => AllRoles.SplitTrim(",");
+        public IEnumerable<string> Roles => AllRoles.SplitTrim(",");
 
 
         public List<string> CastArguments(object[] args)

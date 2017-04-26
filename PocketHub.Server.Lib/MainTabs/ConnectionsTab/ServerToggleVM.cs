@@ -1,0 +1,72 @@
+﻿using Microsoft.Owin.Hosting;
+using PocketHub.Server.Lib.Configuration;
+using PocketHub.Server.Lib.SignalRHubs;
+using PropertyChanged;
+using Repo2.Core.ns11.ChangeNotification;
+using Repo2.Core.ns11.Exceptions;
+using Repo2.Core.ns11.Extensions.StringExtensions;
+using Repo2.Core.ns11.InputCommands;
+using Repo2.SDK.WPF45.Exceptions;
+using Repo2.SDK.WPF45.InputCommands;
+using System;
+using System.Reflection;
+
+namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
+{
+    [ImplementPropertyChanged]
+    public class ServerToggleVM<T> where T : HubsRegistryBase
+    {
+        private      EventHandler _serverStarted;
+        public event EventHandler  ServerStarted
+        {
+            add    { _serverStarted -= value; _serverStarted += value; }
+            remove { _serverStarted -= value; }
+        }
+
+        private      EventHandler _serverStopped;
+        public event EventHandler  ServerStopped
+        {
+            add    { _serverStopped -= value; _serverStopped += value; }
+            remove { _serverStopped -= value; }
+        }
+
+        private ServerSettings _cfg;
+        private IDisposable    _webApp;
+
+        public ServerToggleVM(ServerSettings serverSettings)
+        {
+            _cfg           = serverSettings;
+            StartServerCmd = R2Command.Relay(StartServer, _ => !IsServerStarted, "Start Server");
+            StopServerCmd  = R2Command.Relay(StopServer , _ =>  IsServerStarted, "Stop Server");
+        }
+
+        public IR2Command  StartServerCmd  { get; } 
+        public IR2Command  StopServerCmd   { get; }
+
+        public bool IsServerStarted => _webApp != null;
+
+
+        private void StartServer()
+        {
+            try
+            {
+                _webApp = WebApp.Start<T>(_cfg.HubServerURL);
+            }
+            catch (TargetInvocationException ex)
+            {
+                Alerter.ShowError($"Unable to start server at {_cfg.HubServerURL}", 
+                                  $"You may need to pick a different port number.{L.F}{ex.Info()}");
+            }
+            if (IsServerStarted) _serverStarted.Raise();
+        }
+
+
+        private void StopServer()
+        {
+            try   { _webApp?.Dispose(); }
+            catch { }
+            _webApp = null;
+            _serverStopped.Raise();
+        }
+    }
+}
