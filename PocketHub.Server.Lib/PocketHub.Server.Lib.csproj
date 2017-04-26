@@ -91,6 +91,9 @@
     <Compile Include="Authentication\IUserInfo.cs" />
     <Compile Include="Authentication\RestServerTokenAuthAttributeBase.cs" />
     <Compile Include="Authentication\UserInfoByAuthToken.cs" />
+    <Compile Include="MainTabs\ConnectionsTab\ConnectionsTabUI.xaml.cs">
+      <DependentUpon>ConnectionsTabUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindows\MainWindowBase.cs" />
     <Compile Include="SignalRHubs\HubsRegistryBase.cs" />
   </ItemGroup>
@@ -128,7 +131,12 @@
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="MainTabs\ConnectionsTab\ConnectionsTabUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.2.0.0\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.2.0.0\build\dotnet\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
