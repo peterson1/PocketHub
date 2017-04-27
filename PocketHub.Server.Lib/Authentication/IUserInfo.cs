@@ -7,5 +7,6 @@ namespace PocketHub.Server.Lib.Authentication
         int                  UserId    { get; }
         string               Username  { get; }
         IEnumerable<string>  Roles     { get; }
+        string               AllRoles  { get; }
     }
 }

@@ -16,13 +16,13 @@ namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
             UpdateTitle("Connections");
 
             ServerToggle   = serverToggleVM;
-            ActivityLog    = activityLogVM;
             CurrentClients = currentClientsVM;
+            ActivityLog    = activityLogVM;
         }
 
 
         public ServerToggleVM<T>  ServerToggle    { get; }
-        public ActivityLogVM      ActivityLog     { get; }
         public CurrentClientsVM   CurrentClients  { get; }
+        public ActivityLogVM      ActivityLog     { get; }
     }
 }

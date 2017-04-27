@@ -1,16 +1,26 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using Autofac;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using PocketHub.Server.Lib.ComponentRegistry;
 using PocketHub.Server.Lib.Logging;
 using Repo2.Core.ns11.Authentication;
 using Repo2.Core.ns11.Extensions.StringExtensions;
 
 namespace PocketHub.Server.Lib.Authentication
 {
-    public abstract class RestServerTokenAuthAttributeBase : AuthorizeAttribute
+    public class RestServerTokenAuthAttribute : AuthorizeAttribute
     {
-        protected abstract ActivityLogVM           Logger   { get; }
-        protected abstract AuthServerTokenChecker  AuthSvr  { get; }
-        protected abstract IR2Credentials          Creds    { get; }
+        private ActivityLogVM           _log;
+        private IR2Credentials          _creds;
+        private AuthServerTokenChecker  _authSvr;
+
+
+        public RestServerTokenAuthAttribute()
+        {
+            _log     = ComponentRegistryBase.Resolve<ActivityLogVM>();
+            _creds   = ComponentRegistryBase.Resolve<IR2Credentials>();
+            _authSvr = ComponentRegistryBase.Resolve<AuthServerTokenChecker>();
+        }
 
 
         public override bool AuthorizeHubConnection(HubDescriptor hubDescriptor, IRequest request)
@@ -23,11 +33,11 @@ namespace PocketHub.Server.Lib.Authentication
             var authTokn = request.GetAuthToken();
             if (authTokn.IsBlank()) return false;
 
-            Logger.Info($"Authenticating on [{Creds.BaseURL}] as “{userNme}” ...");
+            _log.Info($"Authenticating on [{_creds.BaseURL}] as “{userNme}” ...");
 
-            var ok = AuthSvr.IsAuthorized(userNme, authTokn).ConfigureAwait(false).GetAwaiter().GetResult();
+            var ok = _authSvr.IsAuthorized(userNme, authTokn).ConfigureAwait(false).GetAwaiter().GetResult();
 
-            if (!ok) Logger.Info("Access denied.");
+            if (!ok) _log.Info("Access denied.");
             return ok;
         }
 
@@ -37,9 +47,7 @@ namespace PocketHub.Server.Lib.Authentication
             var usrNme = hubIncomingInvokerContext.Hub.Context.Request.GetUserName();
             if (usrNme.IsBlank()) return false;
 
-            return AuthSvr.HasProfile(usrNme);
+            return _authSvr.HasProfile(usrNme);
         }
-
-
     }
 }

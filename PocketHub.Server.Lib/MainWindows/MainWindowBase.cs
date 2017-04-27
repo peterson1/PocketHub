@@ -36,7 +36,7 @@ namespace PocketHub.Server.Lib.MainWindows
         {
             StartBeingBusy("Closing all connections...");
             _togl.StopServerCmd.ExecuteIfItCan();
-            await Task.Delay(1000);
+            await Task.Delay(500);
             StopBeingBusy();
         }
 

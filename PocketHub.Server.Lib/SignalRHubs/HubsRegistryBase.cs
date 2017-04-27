@@ -11,7 +11,6 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
         public void Configuration(IAppBuilder app)
         {
-            //Register<ProductReaderHub1>();
             RegisterHubs();
 
             app.MapSignalR();

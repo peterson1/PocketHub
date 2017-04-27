@@ -84,21 +84,52 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\AuthServerTokenChecker.cs" />
     <Compile Include="Authentication\HubContextExtensions.cs" />
     <Compile Include="Authentication\IUserInfo.cs" />
-    <Compile Include="Authentication\RestServerTokenAuthAttributeBase.cs" />
+    <Compile Include="Authentication\RestServerTokenAuthAttribute.cs" />
     <Compile Include="Authentication\UserInfoByAuthToken.cs" />
+    <Compile Include="ComponentRegistry\ComponentRegistryBase.cs" />
+    <Compile Include="Logging\ActivityLogUI.xaml.cs">
+      <DependentUpon>ActivityLogUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainTabs\ConnectionsTab\ConnectionsTabUI.xaml.cs">
       <DependentUpon>ConnectionsTabUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainTabs\ConnectionsTab\CurrentClientsUI.xaml.cs">
+      <DependentUpon>CurrentClientsUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainTabs\ConnectionsTab\ServerToggleUI.xaml.cs">
+      <DependentUpon>ServerToggleUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainTabs\MainTabsUI.xaml.cs">
+      <DependentUpon>MainTabsUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindows\MainWindowBase.cs" />
     <Compile Include="SignalRHubs\HubsRegistryBase.cs" />
+    <Compile Include="SignalRHubs\SignalRHubBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComponentRegistry\PocketHubComponents.cs" />
     <Compile Include="Configuration\ServerSettings.cs" />
     <Compile Include="Logging\ActivityLogVM.cs" />
     <Compile Include="MainTabs\ConnectionsTab\ClientRowVM.cs" />
@@ -132,7 +163,23 @@
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Logging\ActivityLogUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainTabs\ConnectionsTab\ConnectionsTabUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainTabs\ConnectionsTab\CurrentClientsUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainTabs\ConnectionsTab\ServerToggleUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainTabs\MainTabsUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
