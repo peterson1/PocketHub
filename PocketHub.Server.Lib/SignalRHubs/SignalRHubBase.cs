@@ -2,12 +2,22 @@
 using PocketHub.Server.Lib.Authentication;
 using PocketHub.Server.Lib.Logging;
 using PocketHub.Server.Lib.MainTabs.ConnectionsTab;
+using Repo2.Core.ns11.ChangeNotification;
+using System;
 using System.Threading.Tasks;
 
 namespace PocketHub.Server.Lib.SignalRHubs
 {
     public abstract class SignalRHubBase : Hub
     {
+        private      EventHandler<string> _statusChanged;
+        public event EventHandler<string>  StatusChanged
+        {
+            add    { _statusChanged -= value; _statusChanged += value; }
+            remove { _statusChanged -= value; }
+        }
+
+
         protected ActivityLogVM          _log;
         private   CurrentClientsVM       _clients;
         private   AuthServerTokenChecker _authSvr;
@@ -21,6 +31,10 @@ namespace PocketHub.Server.Lib.SignalRHubs
             _clients = currentClientsVM;
             _authSvr = authServerTokenChecker;
         }
+
+
+        public string Status { get; private set; }
+
 
 
         public override Task OnReconnected()
@@ -44,14 +58,16 @@ namespace PocketHub.Server.Lib.SignalRHubs
         }
 
 
-        private void SetStatus(string connectionState)
+        private void SetStatus(string message)
         {
             var connId = Context.ConnectionId;
             var hubNme = GetType().Name;
+            var msg    = $"“{connId}” @‹{hubNme}› :  {message}";
 
-            _clients.AddOrEdit(connId, Current, hubNme, connectionState);
+            _clients.AddOrEdit(connId, Current, hubNme, message);
             
-            _log.Info($"“{connId}” @‹{hubNme}› :  {connectionState}");
+            _log.Info(msg);
+            _statusChanged?.Raise(Status = msg);
         }
 
 

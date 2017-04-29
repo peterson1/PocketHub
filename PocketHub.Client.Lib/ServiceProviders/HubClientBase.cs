@@ -31,6 +31,13 @@ namespace PocketHub.Client.Lib.ServiceProviders
         }
 
 
+        //public void UseConnectionFrom(HubClientBase client)
+        //{
+        //    _conn = client._conn;
+        //    _hub  = client._hub;
+        //}
+
+
         protected abstract string HubName { get; }
 
         public bool              IsConnected   => _conn?.State == ConnectionState.Connected;
@@ -73,6 +80,7 @@ namespace PocketHub.Client.Lib.ServiceProviders
             if (IsConnected)
             {
                 SetStatus("Successfully connected to server.");
+                OnConnected();
                 return Reply.Success();
             }
             else
@@ -80,6 +88,27 @@ namespace PocketHub.Client.Lib.ServiceProviders
                 SetStatus("Failed to connect to server.");
                 return Reply.Error("Failed to connect.");
             }
+        }
+
+
+        protected async Task<Reply<T>> Invoke<T>(string methodName, params object[] args)
+        {
+            SetStatus($"Invoking ‹{HubName}›.{methodName}() ...");
+            try
+            {
+                var rep = await _hub.Invoke<Reply<T>>(methodName, args);
+                SetStatus(rep.IsSuccessful ? $"Successfully returned: [{rep.Result}]" : rep.ErrorsText);
+                return rep;
+            }
+            catch (Exception ex)
+            {
+                return Reply.Error<T>(ex.Info());
+            }
+        }
+
+
+        protected virtual void OnConnected()
+        {
         }
 
 
