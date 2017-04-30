@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PocketHub.Server.Lib.SignalRHubs
 {
-    public abstract class SignalRHubBase : Hub
+    public abstract class SignalRHubBase : Hub, IStatusChanger
     {
         private      EventHandler<string> _statusChanged;
         public event EventHandler<string>  StatusChanged
@@ -58,7 +58,7 @@ namespace PocketHub.Server.Lib.SignalRHubs
         }
 
 
-        private void SetStatus(string message)
+        protected void SetStatus(string message)
         {
             var connId = Context.ConnectionId;
             var hubNme = GetType().Name;

@@ -1,10 +1,11 @@
-﻿using Autofac;
-using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using PocketHub.Server.Lib.ComponentRegistry;
 using PocketHub.Server.Lib.Logging;
 using Repo2.Core.ns11.Authentication;
+using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions.StringExtensions;
+using System;
 
 namespace PocketHub.Server.Lib.Authentication
 {
@@ -35,7 +36,18 @@ namespace PocketHub.Server.Lib.Authentication
 
             _log.Info($"Authenticating on [{_creds.BaseURL}] as “{userNme}” ...");
 
-            var ok = _authSvr.IsAuthorized(userNme, authTokn).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            var ok = false;
+            try
+            {
+                ok = _authSvr.IsAuthorized(userNme, authTokn).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                _log.Info(ex.Info(false, false));
+                //return false;  --> client see 401:Unauthorized whatever the error is
+                throw ex;     // --> client sees actual HTTP error code
+            }
 
             if (!ok) _log.Info("Access denied.");
             return ok;
