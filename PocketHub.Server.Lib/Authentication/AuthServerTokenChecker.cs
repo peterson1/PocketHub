@@ -1,4 +1,6 @@
-﻿using Repo2.Core.ns11.Authentication;
+﻿using PocketHub.Server.Lib.ComponentRegistry;
+using PocketHub.Server.Lib.Logging;
+using Repo2.Core.ns11.Authentication;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions;
 using Repo2.Core.ns11.RestClients;
@@ -17,10 +19,15 @@ namespace PocketHub.Server.Lib.Authentication
         private Dictionary<string, IUserInfo> _authorized = new Dictionary<string, IUserInfo>();
 
 
-        public AuthServerTokenChecker(IR2RestClient r2RestClient, IR2Credentials credentials)
+        public AuthServerTokenChecker(IR2RestClient r2RestClient, 
+                                      IR2Credentials credentials,
+                                      ActivityLogVM log)
         {
             _rest  = r2RestClient;
             _creds = credentials;
+
+            //var log = ComponentRegistryBase.Resolve<ActivityLogVM>();
+            _rest.OnRetry += (s, e) => log.Info(e);
         }
 
 
