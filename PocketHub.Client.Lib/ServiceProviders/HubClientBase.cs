@@ -4,6 +4,7 @@ using Repo2.Core.ns11.ChangeNotification;
 using Repo2.Core.ns11.DataStructures;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions.StringExtensions;
+using Repo2.SDK.WPF45.ChangeNotification;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PocketHub.Client.Lib.ServiceProviders
 {
-    public abstract class HubClientBase : StatusChanger, IHubClient
+    public abstract class HubClientBase : StatusChangerN45, IHubClient
     {
         private      EventHandler<ConnectionStatus> _connectStateChanged;
         public event EventHandler<ConnectionStatus>  ConnectStateChanged
