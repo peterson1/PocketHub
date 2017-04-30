@@ -110,6 +110,10 @@
     <Compile Include="Authentication\RestServerTokenAuthAttribute.cs" />
     <Compile Include="Authentication\UserInfoByAuthToken.cs" />
     <Compile Include="ComponentRegistry\ComponentRegistryBase.cs" />
+    <Compile Include="Databases\HubAlterationsDb1.cs" />
+    <Compile Include="Databases\HubSnapshotsDb1.cs" />
+    <Compile Include="Databases\IHubDatabase.cs" />
+    <Compile Include="Databases\ModsAndSnapsDB1.cs" />
     <Compile Include="Logging\ActivityLogUI.xaml.cs">
       <DependentUpon>ActivityLogUI.xaml</DependentUpon>
     </Compile>
