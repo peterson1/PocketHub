@@ -17,6 +17,7 @@ namespace PocketHub.Client.Lib.ServiceContracts
 
     public interface IHubClient : IStatusChanger
     {
+        event EventHandler                   Connected;
         event EventHandler<ConnectionStatus> ConnectStateChanged;
 
         Task<Reply>       Connect       (string hubServerUrl, string username, string authenticationToken);

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:xtk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:PocketHub.Server.Lib.MainTabs.ConnectionsTab"
-             xmlns:logng="clr-namespace:PocketHub.Server.Lib.Logging"
+             xmlns:logng="clr-namespace:PocketHub.Client.Lib.UserInterfaces.Logging;assembly=PocketHub.Client.Lib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PocketHub.Server.Lib.MainTabs
+namespace PocketHub.Client.Lib.UserInterfaces.Logging
 {
     /// <summary>
-    /// Interaction logic for MainTabsUI.xaml
+    /// Interaction logic for ActivityLogUI.xaml
     /// </summary>
-    public partial class MainTabsUI : UserControl
+    public partial class ActivityLogUI : UserControl
     {
-        public MainTabsUI()
+        public ActivityLogUI()
         {
             InitializeComponent();
         }

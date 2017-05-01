@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
+using PocketHub.Client.Lib.UserInterfaces.Logging;
 using PocketHub.Server.Lib.Authentication;
-using PocketHub.Server.Lib.Logging;
 using PocketHub.Server.Lib.MainTabs.ConnectionsTab;
 using Repo2.Core.ns11.ChangeNotification;
 using System;

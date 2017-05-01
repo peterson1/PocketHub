@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Autofac.Core;
+using PocketHub.Client.Lib.UserInterfaces.Logging;
 using PocketHub.Server.Lib.Authentication;
 using PocketHub.Server.Lib.Configuration;
-using PocketHub.Server.Lib.Logging;
 using PocketHub.Server.Lib.MainTabs.ConnectionsTab;
 using PocketHub.Server.Lib.SignalRHubs;
 using Repo2.Core.ns11.Authentication;

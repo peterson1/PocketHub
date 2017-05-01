@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using PocketHub.Client.Lib.UserInterfaces.Logging;
 using PocketHub.Server.Lib.ComponentRegistry;
-using PocketHub.Server.Lib.Logging;
 using Repo2.Core.ns11.Authentication;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions.StringExtensions;

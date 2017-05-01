@@ -1,4 +1,4 @@
-﻿using PocketHub.Server.Lib.Logging;
+﻿using PocketHub.Client.Lib.UserInterfaces.Logging;
 using PocketHub.Server.Lib.SignalRHubs;
 using PropertyChanged;
 using Repo2.SDK.WPF45.ViewModelTools;

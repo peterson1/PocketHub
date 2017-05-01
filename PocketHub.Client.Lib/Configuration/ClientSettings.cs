@@ -2,9 +2,9 @@
 using Repo2.SDK.WPF45.Configuration;
 using Repo2.SDK.WPF45.FileSystems;
 
-namespace PocketHub.Server.Lib.Configuration
+namespace PocketHub.Client.Lib.Configuration
 {
-    public class ServerSettings : IR2Credentials
+    public class ClientSettings : IR2Credentials
     {
         public string  HubServerURL        { get; set; }
         public string  AuthServerURL       { get; set; }
@@ -20,8 +20,8 @@ namespace PocketHub.Server.Lib.Configuration
         int    IR2Credentials.CheckIntervalSeconds => 0;
 
 
-        public static ServerSettings CreateDefault()
-            => new ServerSettings
+        public static ClientSettings CreateDefault()
+            => new ClientSettings
             {
                 HubServerURL       = "http://localhost:33301",
                 AuthServerURL      = "????",
@@ -31,11 +31,11 @@ namespace PocketHub.Server.Lib.Configuration
             };
 
 
-        public static ServerSettings LoadFile()
+        public static ClientSettings LoadFile()
         {
             var fs    = new FileSystemAccesor1();
-            var loadr = new BesideExeCfgLoader<ServerSettings>(fs);
-            return loadr.Load(ServerSettings.CreateDefault());
+            var loadr = new BesideExeCfgLoader<ClientSettings>(fs);
+            return loadr.Load(ClientSettings.CreateDefault());
         }
     }
 }

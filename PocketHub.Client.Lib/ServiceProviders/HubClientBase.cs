@@ -14,6 +14,13 @@ namespace PocketHub.Client.Lib.ServiceProviders
 {
     public abstract class HubClientBase : StatusChangerN45, IHubClient
     {
+        private      EventHandler _connected;
+        public event EventHandler  Connected
+        {
+            add    { _connected -= value; _connected += value; }
+            remove { _connected -= value; }
+        }
+
         private      EventHandler<ConnectionStatus> _connectStateChanged;
         public event EventHandler<ConnectionStatus>  ConnectStateChanged
         {
@@ -82,6 +89,7 @@ namespace PocketHub.Client.Lib.ServiceProviders
             {
                 SetStatus("Successfully connected to server.");
                 OnConnected();
+                _connected?.Raise();
                 return Reply.Success();
             }
             else
@@ -95,16 +103,20 @@ namespace PocketHub.Client.Lib.ServiceProviders
         protected async Task<Reply<T>> Invoke<T>(string methodName, params object[] args)
         {
             SetStatus($"Invoking ‹{HubName}›.{methodName}() ...");
+            Reply<T> rep;
             try
             {
-                var rep = await _hub.Invoke<Reply<T>>(methodName, args);
-                SetStatus(rep.IsSuccessful ? $"Successfully returned: [{rep.Result}]" : rep.ErrorsText);
-                return rep;
+                rep = await _hub.Invoke<Reply<T>>(methodName, args);
             }
             catch (Exception ex)
             {
                 return Reply.Error<T>(ex.Info());
             }
+            var msg = rep.Failed ? rep.ErrorsText
+                    : $"Successfully returned ‹{typeof(T).Name}› [{rep.Result}]";
+
+            SetStatus(msg);
+            return rep;
         }
 
 
