@@ -27,10 +27,10 @@ namespace PocketHub.Server.Lib.Databases
         }
 
 
-        public async Task<Reply<int>> CreateNew(SubjectAlterations mods)
+        public async Task<Reply<uint>> CreateNew(SubjectAlterations mods)
         {
             SetStatus($"Creating new ‹{TName}› record ...");
-            int id;
+            uint id;
             try
             {
                 id = await _modsDB.CreateNewSubject(mods);
@@ -38,10 +38,10 @@ namespace PocketHub.Server.Lib.Databases
             catch (Exception ex)
             {
                 _log.Info(ex.Info(true, true));
-                return Reply.Error<int>(ex.Info(false, false));
+                return Reply.Error<uint>(ex.Info(false, false));
             }
             SetStatus($"Successfully created new ‹{TName}› (id: {id}).");
-            return new Reply<int>(id);
+            return new Reply<uint>(id);
         }
 
 
@@ -51,7 +51,7 @@ namespace PocketHub.Server.Lib.Databases
         }
 
 
-        public Task<Reply<T>> GetById(int id)
+        public Task<Reply<T>> GetById(uint id)
         {
             throw new NotImplementedException();
         }

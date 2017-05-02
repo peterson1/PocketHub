@@ -7,19 +7,17 @@ using Repo2.Core.ns11.InputCommands;
 using Repo2.SDK.WPF45.Exceptions;
 using Repo2.SDK.WPF45.InputCommands;
 using Repo2.SDK.WPF45.ViewModelTools;
-using System;
 using System.Threading.Tasks;
 
 namespace PocketHub.Client.Lib.UserInterfaces.MainWindows
 {
-    public abstract class MainWindowVMBase<T> : TabbedMainWindowBase
-        where T : IHubClient
+    public abstract class MainWindowVMBase : TabbedMainWindowBase
     {
         private   AuthServerTokenSetter _authSetr;
         protected ClientSettings        _cfg;
-        protected T                     _client;
+        protected IHubClient            _client;
 
-        public MainWindowVMBase(T hubClient,
+        public MainWindowVMBase(IHubClient hubClient,
                                 ActivityLogVM activityLogVM,
                                 ClientSettings clientSettings,
                                 AuthServerTokenSetter authServerTokenSetter,
@@ -32,11 +30,9 @@ namespace PocketHub.Client.Lib.UserInterfaces.MainWindows
             ConnectCmd    = R2Command.Async(ConnectClient, _ => !_client.IsConnected, "Connect");
             DisconnectCmd = R2Command.Relay(_client.Disconnect, _ => _client.IsConnected, "Disconnect");
 
-            _client.StatusChanged += (s, e) =>
-            {
-                AppendToCaption(e);
-                ActivityLog.Info(e);
-            };
+            _client.StatusChanged       += (s, e) => ActivityLog.Info(e);
+            _client.ConnectStateChanged += (s, e) => AppendToCaption(e.ToString());
+
             ConnectCmd.ExecuteIfItCan();
         }
 

@@ -18,6 +18,7 @@
 
             <logng:ActivityLogUI DataContext="{Binding ActivityLog}"
                                  DockPanel.Dock="Bottom"
+                                 MaxHeight="300"
                                  />
 
             <local:CurrentClientsUI DataContext="{Binding CurrentClients}"

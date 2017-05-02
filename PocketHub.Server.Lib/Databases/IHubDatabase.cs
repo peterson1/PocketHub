@@ -8,9 +8,9 @@ namespace PocketHub.Server.Lib.Databases
     public interface IHubDatabase<T> : IStatusChanger
         where T : ISubjectSnapshot, new()
     {
-        Task<Reply<int>>      CreateNew (SubjectAlterations mods);
+        Task<Reply<uint>>     CreateNew (SubjectAlterations mods);
         Task<Reply<bool>>     Update    (SubjectAlterations mods);
-        Task<Reply<T>>        GetById   (int id) ;
+        Task<Reply<T>>        GetById   (uint id) ;
         Task<Reply<List<T>>>  GetAll    ();
         //Task<Reply<int>>      CountAll  ();
     }

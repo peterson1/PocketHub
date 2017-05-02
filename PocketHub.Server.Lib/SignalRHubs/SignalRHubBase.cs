@@ -60,16 +60,16 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
         protected void SetStatus(string message)
         {
-            var connId = Context.ConnectionId;
-            var hubNme = GetType().Name;
-            var msg    = $"“{connId}” @‹{hubNme}› :  {message}";
+            var msg = $"{Current.Username} @{HubName} :  {message}";
 
-            _clients.AddOrEdit(connId, Current, hubNme, message);
+            _clients.AddOrEdit(Context.ConnectionId, Current, HubName, message);
             
             _log.Info(msg);
             _statusChanged?.Raise(Status = msg);
         }
 
+
+        protected string HubName => GetType().Name;
 
         protected IUserInfo Current 
             => _authSvr.GetProfile(Context.Request.GetUserName());
