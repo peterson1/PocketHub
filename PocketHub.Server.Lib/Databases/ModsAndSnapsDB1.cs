@@ -27,13 +27,13 @@ namespace PocketHub.Server.Lib.Databases
         }
 
 
-        public async Task<Reply<uint>> CreateNew(SubjectAlterations mods)
+        public Reply<uint> CreateNew(SubjectAlterations mods)
         {
             SetStatus($"Creating new ‹{TName}› record ...");
             uint id;
             try
             {
-                id = await _modsDB.CreateNewSubject(mods);
+                id = _modsDB.CreateNewSubject(mods);
             }
             catch (Exception ex)
             {
@@ -45,25 +45,25 @@ namespace PocketHub.Server.Lib.Databases
         }
 
 
-        public Task<Reply<bool>> Update(SubjectAlterations mods)
+        public Reply<bool> Update(SubjectAlterations mods)
         {
             throw new NotImplementedException();
         }
 
 
-        public Task<Reply<T>> GetById(uint id)
+        public Reply<T> GetById(uint id)
         {
             throw new NotImplementedException();
         }
 
 
-        public async Task<Reply<List<T>>> GetAll()
+        public Reply<List<T>> GetAll()
         {
             SetStatus($"Querying ALL ‹{TName}› records ...");
             List<T> list;
             try
             {
-                list = await _snapsDB.GetAll<T>();
+                list = _snapsDB.GetAll<T>();
             }
             catch (Exception ex)
             {
