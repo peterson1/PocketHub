@@ -63,7 +63,7 @@ namespace PocketHub.Server.Lib.Databases
             List<T> list;
             try
             {
-                list = _snapsDB.GetAll<T>();
+                list = _snapsDB.GetAll();
             }
             catch (Exception ex)
             {

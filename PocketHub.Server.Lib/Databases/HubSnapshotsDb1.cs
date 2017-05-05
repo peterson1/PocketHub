@@ -6,10 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Repo2.Core.ns11.FileSystems;
 using Repo2.Core.ns11.Databases;
+using Repo2.Core.ns11.DataStructures;
 
 namespace PocketHub.Server.Lib.Databases
 {
-    internal class HubSnapshotsDb1<T> : SubjectSnapshotsRepoBase
+    internal class HubSnapshotsDb1<T> : SubjectSnapshotsRepoBase<T>
+        where T : ISubjectSnapshot, new()
     {
         protected override string DbFileName => $@"Databases\{typeof(T).Name}_Snapshots.LiteDB3";
         protected override string CollectionName => "v1";
