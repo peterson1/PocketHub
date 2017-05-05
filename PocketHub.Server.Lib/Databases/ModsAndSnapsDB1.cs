@@ -45,16 +45,16 @@ namespace PocketHub.Server.Lib.Databases
         }
 
 
-        public Reply<bool> Update(SubjectAlterations mods)
-        {
-            throw new NotImplementedException();
-        }
+        //public Reply<bool> Update(SubjectAlterations mods)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
 
-        public Reply<T> GetById(uint id)
-        {
-            throw new NotImplementedException();
-        }
+        //public Reply<T> GetById(uint id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
 
         public Reply<List<T>> GetAll()

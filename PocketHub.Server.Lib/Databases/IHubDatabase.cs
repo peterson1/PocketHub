@@ -9,9 +9,9 @@ namespace PocketHub.Server.Lib.Databases
         where T : ISubjectSnapshot, new()
     {
         Reply<uint>     CreateNew (SubjectAlterations mods);
-        Reply<bool>     Update    (SubjectAlterations mods);
-        Reply<T>        GetById   (uint id) ;
         Reply<List<T>>  GetAll    ();
+        //Reply<bool>     Update    (SubjectAlterations mods);
+        //Reply<T>        GetById   (uint id) ;
         //Task<Reply<int>>      CountAll  ();
     }
 }
