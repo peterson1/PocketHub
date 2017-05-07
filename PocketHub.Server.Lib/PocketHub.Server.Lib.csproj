@@ -109,11 +109,13 @@
     <Compile Include="Authentication\IUserInfo.cs" />
     <Compile Include="Authentication\RestServerTokenAuthAttribute.cs" />
     <Compile Include="Authentication\UserInfoByAuthToken.cs" />
+    <Compile Include="Authentication\UserNamesDictionary.cs" />
     <Compile Include="ComponentRegistry\ComponentRegistryBase.cs" />
     <Compile Include="Databases\HubAlterationsDb1.cs" />
     <Compile Include="Databases\HubSnapshotsDb1.cs" />
     <Compile Include="Databases\IHubDatabase.cs" />
-    <Compile Include="Databases\ModsAndSnapsDB1.cs" />
+    <Compile Include="Databases\ModsAndSnapsRepoBase.cs" />
+    <Compile Include="DTOs\UserFullNames.cs" />
     <Compile Include="MainTabs\ConnectionsTab\ConnectionsTabUI.xaml.cs">
       <DependentUpon>ConnectionsTabUI.xaml</DependentUpon>
     </Compile>

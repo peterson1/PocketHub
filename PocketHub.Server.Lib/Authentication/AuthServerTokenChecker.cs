@@ -1,4 +1,5 @@
 ﻿using PocketHub.Client.Lib.UserInterfaces.Logging;
+using PocketHub.Server.Lib.DTOs;
 using Repo2.Core.ns11.Authentication;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions;
@@ -15,19 +16,26 @@ namespace PocketHub.Server.Lib.Authentication
         private bool                          _isCredentialsSet;
         private IR2Credentials                _creds;
         private IR2RestClient                 _rest;
+        private UserNamesDictionary           _usrs;
         private Dictionary<string, IUserInfo> _authorized = new Dictionary<string, IUserInfo>();
 
 
         public AuthServerTokenChecker(IR2RestClient r2RestClient, 
                                       IR2Credentials credentials,
+                                      UserNamesDictionary userNamesDictionary,
                                       ActivityLogVM log)
         {
+            _usrs  = userNamesDictionary;
             _rest  = r2RestClient;
             _creds = credentials;
 
             //var log = ComponentRegistryBase.Resolve<ActivityLogVM>();
             _rest.OnRetry += (s, e) => log.Info(e);
         }
+
+
+        public IUserInfo GetProfile (string userName) => _authorized.GetOrDefault(userName);
+        public bool      HasProfile (string userName) => _authorized.ContainsKey(userName);
 
 
         public async Task<bool> IsAuthorized(string userNme, string authTokn)
@@ -47,12 +55,21 @@ namespace PocketHub.Server.Lib.Authentication
             _authorized.Remove(userNme);
             _authorized.Add(userNme, usrInf);
 
+            if (!_usrs.Any()) await FillUserNamesDictionary();
+
             return true;
         }
 
 
-        public IUserInfo GetProfile (string userName) => _authorized.GetOrDefault(userName);
-        public bool      HasProfile (string userName) => _authorized.ContainsKey(userName);
+        private async Task FillUserNamesDictionary()
+        {
+            var list = await _rest.List<UserFullNames>(new CancellationToken());
+            foreach (var usr in list)
+            {
+                _usrs.Remove(usr.uid);
+                _usrs.Add(usr.uid, usr.FullName);
+            }
+        }
 
 
         private void SetCredentials(string userNme)

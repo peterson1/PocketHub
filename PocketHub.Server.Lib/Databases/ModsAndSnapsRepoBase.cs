@@ -1,4 +1,5 @@
 ﻿using PocketHub.Client.Lib.UserInterfaces.Logging;
+using PocketHub.Server.Lib.Authentication;
 using Repo2.Core.ns11.DataStructures;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.FileSystems;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace PocketHub.Server.Lib.Databases
 {
-    public class ModsAndSnapsDB1<T> : StatusChangerN45, IHubDatabase<T>
+    public abstract class ModsAndSnapsRepoBase<T> : StatusChangerN45, IHubDatabase<T>
         where T : ISubjectSnapshot, new()
     {
         private HubAlterationsDb1<T> _modsDB;
         private HubSnapshotsDb1  <T> _snapsDB;
         private ActivityLogVM        _log;
 
-        public ModsAndSnapsDB1(IFileSystemAccesor fs, ActivityLogVM activityLogVM)
+        public ModsAndSnapsRepoBase(UserNamesDictionary userNamesDictionary, IFileSystemAccesor fs, ActivityLogVM activityLogVM)
         {
             _log     = activityLogVM;
             _modsDB  = new HubAlterationsDb1<T>(fs);
@@ -24,7 +25,12 @@ namespace PocketHub.Server.Lib.Databases
 
             _modsDB .StatusChanged += (s, e) => SetStatus(e);
             _snapsDB.StatusChanged += (s, e) => SetStatus(e);
+
+            _snapsDB.ActorsDictionary = userNamesDictionary;
         }
+
+
+        //protected abstract Dictionary<int, string> GetActorsDictionary();
 
 
         public Reply<uint> CreateNew(SubjectAlterations mods)

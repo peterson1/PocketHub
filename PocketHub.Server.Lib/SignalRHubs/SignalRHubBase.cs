@@ -3,6 +3,7 @@ using PocketHub.Client.Lib.UserInterfaces.Logging;
 using PocketHub.Server.Lib.Authentication;
 using PocketHub.Server.Lib.MainTabs.ConnectionsTab;
 using Repo2.Core.ns11.ChangeNotification;
+using Repo2.Core.ns11.Extensions.StringExtensions;
 using System;
 using System.Threading.Tasks;
 
@@ -21,15 +22,18 @@ namespace PocketHub.Server.Lib.SignalRHubs
         protected ActivityLogVM          _log;
         private   CurrentClientsVM       _clients;
         private   AuthServerTokenChecker _authSvr;
+        private   UserNamesDictionary    _usrNames;
 
 
         public SignalRHubBase(ActivityLogVM activityLogVM,
                               AuthServerTokenChecker authServerTokenChecker,
-                              CurrentClientsVM currentClientsVM)
+                              CurrentClientsVM currentClientsVM,
+                              UserNamesDictionary userNamesDictionary)
         {
-            _log     = activityLogVM;
-            _clients = currentClientsVM;
-            _authSvr = authServerTokenChecker;
+            _log      = activityLogVM;
+            _clients  = currentClientsVM;
+            _authSvr  = authServerTokenChecker;
+            _usrNames = userNamesDictionary;
         }
 
 
@@ -73,5 +77,17 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
         protected IUserInfo Current 
             => _authSvr.GetProfile(Context.Request.GetUserName());
+
+
+        protected int? FindUserId(string userName)
+        {
+            if (userName.IsBlank()) return null;
+            foreach (var kvp in _usrNames)
+            {
+                if (kvp.Value.ToLower() == userName.ToLower())
+                    return kvp.Key;
+            }
+            return null;
+        }
     }
 }

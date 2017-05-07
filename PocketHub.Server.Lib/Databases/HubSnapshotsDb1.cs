@@ -1,12 +1,9 @@
-﻿using Repo2.SDK.WPF45.Databases;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Repo2.Core.ns11.FileSystems;
-using Repo2.Core.ns11.Databases;
+﻿using Repo2.Core.ns11.Databases;
 using Repo2.Core.ns11.DataStructures;
+using Repo2.Core.ns11.Extensions;
+using Repo2.Core.ns11.FileSystems;
+using Repo2.SDK.WPF45.Databases;
+using System.Collections.Generic;
 
 namespace PocketHub.Server.Lib.Databases
 {
@@ -17,8 +14,15 @@ namespace PocketHub.Server.Lib.Databases
         protected override string CollectionName => "v1";
 
 
+        internal Dictionary<int, string>  ActorsDictionary { private get; set; }
+
+
         internal HubSnapshotsDb1(IFileSystemAccesor fs, ISubjectAlterationsDB subjectAlterationsDB) : base(fs, subjectAlterationsDB)
         {
         }
+
+
+        protected override string GetActorName(int actorID)
+            => this.ActorsDictionary.GetOrDefault(actorID);
     }
 }
