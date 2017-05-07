@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\AuthServerTokenChecker.cs" />
+    <Compile Include="Authentication\HeaderTokensAuthAttributeBase.cs" />
     <Compile Include="Authentication\HubContextExtensions.cs" />
     <Compile Include="Authentication\IUserInfo.cs" />
     <Compile Include="Authentication\RestServerTokenAuthAttribute.cs" />
