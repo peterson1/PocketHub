@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using Repo2.SDK.WPF45.Serialization;
 
 namespace PocketHub.Server.Lib.UserAccounts
 {
@@ -30,6 +31,26 @@ namespace PocketHub.Server.Lib.UserAccounts
 
             _bMapr.RegisterAutoId<uint>(v => v == 0,
                 (db, col) => (uint)db.Count(col) + 1);
+        }
+
+
+        private void CreateSeedRecordsIfEmpty()
+        {
+            using (var db = CreateConnection())
+            {
+                var col = db.GetCollection<UserAccount>(COLLECTION_NAME);
+                if (col.Count() > 0) return;
+
+                var seedRecs = _fs.ReadDesktopJsonFile<List<UserAccount>>("users_seed.json");
+                using (var trans = db.BeginTrans())
+                {
+                    foreach (var rec in seedRecs)
+                    {
+                        col.Insert(rec);
+                    }
+                    trans.Commit();
+                }
+            }
         }
 
 
@@ -67,15 +88,11 @@ namespace PocketHub.Server.Lib.UserAccounts
 
         public UserAccount FindAccount(string loginName)
         {
+            CreateSeedRecordsIfEmpty();
+
             using (var db = CreateConnection())
             {
                 var col = db.GetCollection<UserAccount>(COLLECTION_NAME);
-                if (col.Count() == 0)
-                {
-                    col.Insert(CreateSeedRecord1());
-                    col.Insert(CreateSeedRecord2());
-                }
-
                 col.EnsureIndex(x => x.LoginName, true);
 
                 var matches = col.Find(x => x.LoginName == loginName).ToList();
@@ -96,27 +113,27 @@ namespace PocketHub.Server.Lib.UserAccounts
         }
 
 
-        private UserAccount CreateSeedRecord1()
-            => new UserAccount
-            {
-                LoginName     = "test_user_1",
-                FullName      = "Test User 1",
-                ShortName     = "usr1",
-                IsBlocked     = false,
-                SaltedKeyHash = ("test_user_1" + "abc").SHA1ForUTF8(),
-                Roles         = new List<string> { "r1" },
-            };
+        //private UserAccount CreateSeedRecord1()
+        //    => new UserAccount
+        //    {
+        //        LoginName     = "test_user_1",
+        //        FullName      = "Test User 1",
+        //        ShortName     = "usr1",
+        //        IsBlocked     = false,
+        //        SaltedKeyHash = ("test_user_1" + "abc").SHA1ForUTF8(),
+        //        Roles         = new List<string> { "r1" },
+        //    };
 
 
-        private UserAccount CreateSeedRecord2()
-            => new UserAccount
-            {
-                LoginName     = "test_user_2",
-                FullName      = "Test User 2",
-                ShortName     = "usr2",
-                IsBlocked     = false,
-                SaltedKeyHash = ("test_user_2" + "def").SHA1ForUTF8(),
-                Roles         = new List<string> { "r2" },
-            };
+        //private UserAccount CreateSeedRecord2()
+        //    => new UserAccount
+        //    {
+        //        LoginName     = "test_user_2",
+        //        FullName      = "Test User 2",
+        //        ShortName     = "usr2",
+        //        IsBlocked     = false,
+        //        SaltedKeyHash = ("test_user_2" + "def").SHA1ForUTF8(),
+        //        Roles         = new List<string> { "r2" },
+        //    };
     }
 }

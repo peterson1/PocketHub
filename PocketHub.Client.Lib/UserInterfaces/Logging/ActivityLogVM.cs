@@ -11,7 +11,7 @@ namespace PocketHub.Client.Lib.UserInterfaces.Logging
         public ActivityLogVM()
         {
             UpdateTitle("Logs");
-            ShowTrace = false;
+            ShowTrace = true;
         }
 
 
