@@ -20,7 +20,7 @@ namespace PocketHub.Client.Lib.ServiceContracts
         event EventHandler                   Connected;
         event EventHandler<ConnectionStatus> ConnectStateChanged;
 
-        Task<Reply>       Connect       (string hubServerUrl, string username, string authenticationToken);
+        Task<Reply>       Connect       (string hubServerUrl, string username, string rawPassword, string sharedKey = null);
         void              Disconnect    ();
         bool              IsConnected   { get; }
         ConnectionStatus  ConnectState  { get; }

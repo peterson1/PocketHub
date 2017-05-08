@@ -11,7 +11,12 @@ namespace PocketHub.Client.Lib.UserInterfaces.Logging
         public ActivityLogVM()
         {
             UpdateTitle("Logs");
+            ShowTrace = false;
         }
+
+
+        public bool ShowTrace { get; set; }
+
 
         public Observables<string> Rows { get; } = new Observables<string>();
 
@@ -22,5 +27,12 @@ namespace PocketHub.Client.Lib.UserInterfaces.Logging
 
         private string AddTimestamp(string message)
             => $"[{DateTime.Now.ToString("hh:mm:sst").ToLower()}]  {message}";
+
+
+        public void Trace(string message)
+        {
+            if (ShowTrace)
+                AsUI(_ => Rows.Add(AddTimestamp(message)));
+        }
     }
 }

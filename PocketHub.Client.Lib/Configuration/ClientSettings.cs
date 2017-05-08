@@ -7,6 +7,7 @@ namespace PocketHub.Client.Lib.Configuration
     public class ClientSettings : IR2Credentials
     {
         public string  HubServerURL        { get; set; }
+        public string  SharedKey           { get; set; }
         public string  AuthServerURL       { get; set; }
         public string  AuthServerThumb     { get; set; }
         public string  AuthServerUsername  { get; set; }
@@ -24,6 +25,7 @@ namespace PocketHub.Client.Lib.Configuration
             => new ClientSettings
             {
                 HubServerURL       = "http://localhost:33301",
+                SharedKey          = "????",
                 AuthServerURL      = "????",
                 AuthServerThumb    = "????",
                 AuthServerUsername = "????",

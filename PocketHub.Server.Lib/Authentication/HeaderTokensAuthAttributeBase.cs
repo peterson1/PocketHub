@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using PocketHub.Client.Lib.UserInterfaces.Logging;
-using PocketHub.Server.Lib.ComponentRegistry;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions.StringExtensions;
 using System;
@@ -19,8 +18,8 @@ namespace PocketHub.Server.Lib.Authentication
         }
 
 
-        protected abstract Task<bool> CanConnect(string username, string authToken);
-        protected abstract bool       CanInvoke (string username, string connectionId, string hubName, string methodName);
+        protected abstract Task<bool>  CanConnect (string username, string authToken);
+        protected abstract Task<bool>  CanInvoke  (string username, string authToken, MethodDescriptor hubMethod);
 
 
         public override bool AuthorizeHubConnection(HubDescriptor hubDescriptor, IRequest request)
@@ -57,10 +56,11 @@ namespace PocketHub.Server.Lib.Authentication
             var usrNme = invoker.Hub.Context.Request.GetUserName();
             if (usrNme.IsBlank()) return false;
 
-            var connId = invoker.Hub.Context.ConnectionId;
-            var method = invoker.MethodDescriptor;
+            var authTokn = invoker.Hub.Context.Request.GetAuthToken();
+            if (authTokn.IsBlank()) return false;
 
-            return CanInvoke(usrNme, connId, method.Hub.Name, method.Name);
+            return CanInvoke(usrNme, authTokn, invoker.MethodDescriptor)
+                        .ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

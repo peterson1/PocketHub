@@ -39,13 +39,6 @@ namespace PocketHub.Client.Lib.ServiceProviders
         }
 
 
-        //public void UseConnectionFrom(HubClientBase client)
-        //{
-        //    _conn = client._conn;
-        //    _hub  = client._hub;
-        //}
-
-
         protected abstract string HubName { get; }
 
         public bool              IsConnected   => _conn?.State == ConnectionState.Connected;
@@ -53,15 +46,16 @@ namespace PocketHub.Client.Lib.ServiceProviders
 
 
 
-        public async Task<Reply> Connect(string url, string usr, string authTokn)
+        public async Task<Reply> Connect(string url, string usr, string rawPassword, string sharedKey)
         {
             Disconnect();
 
             SetStatus($"Connecting to [{url}] as “{usr}” ...");
-            _conn = new HubConnection(url);
+            var tkn = ComposeAuthToken(usr, rawPassword, sharedKey);
 
+            _conn = new HubConnection(url);
             _conn.Headers.Add("username" , usr);
-            _conn.Headers.Add("auth-token", authTokn);
+            _conn.Headers.Add("auth-token", tkn);
 
             HandleConnectionEvents();
 
@@ -97,6 +91,13 @@ namespace PocketHub.Client.Lib.ServiceProviders
                 SetStatus("Failed to connect to server.");
                 return Reply.Error("Failed to connect.");
             }
+        }
+
+
+        private string ComposeAuthToken(string loginName, string rawPassword, string sharedKey)
+        {
+            var saltdKeyHash = (loginName + rawPassword).SHA1ForUTF8();
+            return (loginName + saltdKeyHash + sharedKey).SHA1ForUTF8();
         }
 
 

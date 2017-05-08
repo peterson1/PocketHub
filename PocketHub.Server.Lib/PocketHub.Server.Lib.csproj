@@ -36,6 +36,9 @@
     <Reference Include="Autofac, Version=4.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.5.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=3.1.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.3.1.0\lib\net35\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -108,9 +111,13 @@
     <Compile Include="Authentication\HeaderTokensAuthAttributeBase.cs" />
     <Compile Include="Authentication\HubContextExtensions.cs" />
     <Compile Include="Authentication\IUserInfo.cs" />
+    <Compile Include="Authentication\PocketHubHeaderAuthAttribute.cs" />
     <Compile Include="Authentication\RestServerTokenAuthAttribute.cs" />
     <Compile Include="Authentication\UserInfoByAuthToken.cs" />
     <Compile Include="Authentication\UserNamesDictionary.cs" />
+    <Compile Include="Authorization\IUserAuthChecker.cs" />
+    <Compile Include="Authorization\MethodDescriptorExtensions.cs" />
+    <Compile Include="Authorization\UserAuthChecker1.cs" />
     <Compile Include="ComponentRegistry\ComponentRegistryBase.cs" />
     <Compile Include="Databases\HubAlterationsDb1.cs" />
     <Compile Include="Databases\HubSnapshotsDb1.cs" />
@@ -129,6 +136,9 @@
     <Compile Include="MainWindows\MainWindowBase.cs" />
     <Compile Include="SignalRHubs\HubsRegistryBase.cs" />
     <Compile Include="SignalRHubs\SignalRHubBase.cs" />
+    <Compile Include="UserAccounts\IUserAccountsRepo.cs" />
+    <Compile Include="UserAccounts\UserAccount.cs" />
+    <Compile Include="UserAccounts\UserAccountsLiteDbRepo1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ServerSettings.cs" />
