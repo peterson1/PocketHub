@@ -26,14 +26,16 @@ namespace PocketHub.Server.Lib.Authorization
 
         public async Task<bool> IsValidCredentials(string loginName, string authToken)
         {
-            var auth = await GetAuthenticAccount(loginName, authToken);
+            await Task.Delay(0);
+            var auth = GetAuthenticAccount(loginName, authToken);
             return auth != null;
         }
 
 
         public async Task<bool> CanInvoke(string loginName, string authToken, MethodDescriptor hubMethod)
         {
-            var acct = await GetAuthenticAccount(loginName, authToken);
+            await Task.Delay(0);
+            var acct = GetAuthenticAccount(loginName, authToken);
             if (acct == null) return false;
             return HasRoleAccess(acct.Roles, hubMethod.GetRoles<PocketHubHeaderAuthAttribute>());
         }
@@ -76,10 +78,10 @@ namespace PocketHub.Server.Lib.Authorization
         }
 
 
-        private async Task<UserAccount> GetAuthenticAccount(string loginName, string authToken)
+        private UserAccount GetAuthenticAccount(string loginName, string authToken)
         {
             if (loginName.IsBlank() || authToken.IsBlank()) return null;
-            var acct = await _repo.FindAccount(loginName);
+            var acct = _repo.FindAccount(loginName);
             if (acct == null) return null;
             if (acct.IsBlocked) return null;
             if (!IsValidToken(acct, authToken)) return null;

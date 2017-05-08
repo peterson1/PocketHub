@@ -46,7 +46,7 @@ namespace PocketHub.Server.Lib.Authentication
                 throw ex;     // --> client sees actual HTTP error code
             }
 
-            if (!ok) _log.Info("Access denied.");
+            if (!ok) _log.Info("Connection denied.");
             return ok;
         }
 
@@ -59,8 +59,21 @@ namespace PocketHub.Server.Lib.Authentication
             var authTokn = invoker.Hub.Context.Request.GetAuthToken();
             if (authTokn.IsBlank()) return false;
 
-            return CanInvoke(usrNme, authTokn, invoker.MethodDescriptor)
-                        .ConfigureAwait(false).GetAwaiter().GetResult();
+            var ok = false;
+            try
+            {
+                ok = CanInvoke(usrNme, authTokn, invoker.MethodDescriptor)
+                    .ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                _log.Info(ex.Info(false, false));
+                //return false;  --> client see 401:Unauthorized whatever the error is
+                throw ex;     // --> client sees actual HTTP error code
+            }
+
+            if (!ok) _log.Info("Invocation denied.");
+            return ok;
         }
     }
 }

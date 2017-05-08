@@ -1,4 +1,5 @@
 ﻿using PocketHub.Server.Lib.Authentication;
+using PocketHub.Server.Lib.UserAccounts;
 using PropertyChanged;
 using Repo2.Core.ns11.DataStructures;
 using Repo2.SDK.WPF45.ViewModelTools;
@@ -13,7 +14,7 @@ namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
         public Observables<ClientRowVM> Rows { get; } = new Observables<ClientRowVM>();
 
 
-        public void AddOrEdit(string connId, IUserInfo currentUsr, string hubName, string connectionState)
+        public void AddOrEdit(string connId, UserAccount currentUsr, string hubName, string connectionState)
         {
             var row = Rows.SingleOrDefault(x => x.ConnectionId == connId);
             if (row == null)

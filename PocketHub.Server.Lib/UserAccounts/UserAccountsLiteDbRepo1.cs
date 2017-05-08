@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace PocketHub.Server.Lib.UserAccounts
 {
@@ -50,9 +51,22 @@ namespace PocketHub.Server.Lib.UserAccounts
         }
 
 
-        public async Task<UserAccount> FindAccount(string loginName)
+        public Dictionary<int, string> GetDictionary()
         {
-            await Task.Delay(0);
+            var dict = new Dictionary<int, string>();
+            using (var db = CreateConnection())
+            {
+                var col = db.GetCollection<UserAccount>(COLLECTION_NAME);
+
+                foreach (var usr in col.FindAll())
+                    dict.Add((int)usr.Id, usr.FullName);
+            }
+            return dict;
+        }
+
+
+        public UserAccount FindAccount(string loginName)
+        {
             using (var db = CreateConnection())
             {
                 var col = db.GetCollection<UserAccount>(COLLECTION_NAME);
@@ -73,6 +87,14 @@ namespace PocketHub.Server.Lib.UserAccounts
                 return matches.Single();
             }
         }
+
+
+        public async Task<UserAccount> FindAccountAsync(string loginName)
+        {
+            await Task.Delay(0);
+            return FindAccount(loginName);
+        }
+
 
         private UserAccount CreateSeedRecord1()
             => new UserAccount

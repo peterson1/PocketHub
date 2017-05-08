@@ -1,12 +1,11 @@
 ﻿using PocketHub.Client.Lib.UserInterfaces.Logging;
-using PocketHub.Server.Lib.Authentication;
+using PocketHub.Server.Lib.UserAccounts;
 using Repo2.Core.ns11.DataStructures;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.FileSystems;
 using Repo2.SDK.WPF45.ChangeNotification;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PocketHub.Server.Lib.Databases
 {
@@ -17,7 +16,7 @@ namespace PocketHub.Server.Lib.Databases
         private HubSnapshotsDb1  <T> _snapsDB;
         private ActivityLogVM        _log;
 
-        public ModsAndSnapsRepoBase(UserNamesDictionary userNamesDictionary, IFileSystemAccesor fs, ActivityLogVM activityLogVM)
+        public ModsAndSnapsRepoBase(IUserAccountsRepo userAccountsRepo, IFileSystemAccesor fs, ActivityLogVM activityLogVM)
         {
             _log     = activityLogVM;
             _modsDB  = new HubAlterationsDb1<T>(fs);
@@ -26,7 +25,7 @@ namespace PocketHub.Server.Lib.Databases
             _modsDB .StatusChanged += (s, e) => SetStatus(e);
             _snapsDB.StatusChanged += (s, e) => SetStatus(e);
 
-            _snapsDB.ActorsDictionary = userNamesDictionary;
+            _snapsDB.ActorsDictionary = userAccountsRepo.GetDictionary();
         }
 
 

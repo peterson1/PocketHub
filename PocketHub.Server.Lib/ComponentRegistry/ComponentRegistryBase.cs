@@ -47,8 +47,6 @@ namespace PocketHub.Server.Lib.ComponentRegistry
 
             b.Solo<CurrentClientsVM>();
             b.Solo<ActivityLogVM>();
-            b.Solo<UserNamesDictionary>();
-            b.Solo<AuthServerTokenChecker>();
 
             RegisterHubComponents(b);
 

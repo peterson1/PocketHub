@@ -2,8 +2,8 @@
 using PocketHub.Client.Lib.UserInterfaces.Logging;
 using PocketHub.Server.Lib.Authentication;
 using PocketHub.Server.Lib.MainTabs.ConnectionsTab;
+using PocketHub.Server.Lib.UserAccounts;
 using Repo2.Core.ns11.ChangeNotification;
-using Repo2.Core.ns11.Extensions.StringExtensions;
 using System;
 using System.Threading.Tasks;
 
@@ -19,21 +19,18 @@ namespace PocketHub.Server.Lib.SignalRHubs
         }
 
 
-        protected ActivityLogVM          _log;
-        private   CurrentClientsVM       _clients;
-        private   AuthServerTokenChecker _authSvr;
-        private   UserNamesDictionary    _usrNames;
+        protected ActivityLogVM     _log;
+        private   IUserAccountsRepo _usrs;
+        private   CurrentClientsVM  _clients;
 
 
         public SignalRHubBase(ActivityLogVM activityLogVM,
-                              AuthServerTokenChecker authServerTokenChecker,
-                              CurrentClientsVM currentClientsVM,
-                              UserNamesDictionary userNamesDictionary)
+                              IUserAccountsRepo userAccountsRepo,
+                              CurrentClientsVM currentClientsVM)
         {
             _log      = activityLogVM;
+            _usrs     = userAccountsRepo;
             _clients  = currentClientsVM;
-            _authSvr  = authServerTokenChecker;
-            _usrNames = userNamesDictionary;
         }
 
 
@@ -64,9 +61,9 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
         protected void SetStatus(string message)
         {
-            var msg = $"{Current?.Username} @{HubName} :  {message}";
+            var msg = $"{CurrentUser?.ShortName} @{HubName} :  {message}";
 
-            _clients.AddOrEdit(Context.ConnectionId, Current, HubName, message);
+            _clients.AddOrEdit(Context.ConnectionId, CurrentUser, HubName, message);
             
             _log.Info(msg);
             _statusChanged?.Raise(Status = msg);
@@ -75,19 +72,12 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
         protected string HubName => GetType().Name;
 
-        protected IUserInfo Current 
-            => _authSvr.GetProfile(Context.Request.GetUserName());
+
+        protected UserAccount CurrentUser 
+            => _usrs.FindAccount(Context.Request.GetUserName());
 
 
         protected int? FindUserId(string userName)
-        {
-            if (userName.IsBlank()) return null;
-            foreach (var kvp in _usrNames)
-            {
-                if (kvp.Value.ToLower() == userName.ToLower())
-                    return kvp.Key;
-            }
-            return null;
-        }
+            => (int?)_usrs.FindAccount(userName)?.Id;
     }
 }
