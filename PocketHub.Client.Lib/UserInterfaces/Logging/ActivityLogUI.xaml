@@ -10,6 +10,7 @@
     <Grid>
         <ListBox ItemsSource="{Binding Rows}"
                  lbhv:ScrollOnChangeBehavior.ScrollOnNewItem="True"
+                 x:Name="lboxRows"
                  />
     </Grid>
 </UserControl>

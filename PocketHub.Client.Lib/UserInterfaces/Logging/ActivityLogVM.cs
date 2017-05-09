@@ -1,5 +1,6 @@
 ﻿using PropertyChanged;
 using Repo2.Core.ns11.DataStructures;
+using Repo2.Core.ns11.Exceptions;
 using Repo2.SDK.WPF45.ViewModelTools;
 using System;
 
@@ -34,5 +35,14 @@ namespace PocketHub.Client.Lib.UserInterfaces.Logging
             if (ShowTrace)
                 AsUI(_ => Rows.Add(AddTimestamp(message)));
         }
+
+
+        public void Unexpected(Exception ex) => AsUI(_ 
+            => Rows.Add(AddTimestamp(ex.Info(true, true))));
+
+
+
+        public void Threat(string message) => AsUI(_ 
+            => Rows.Add($"!!! THREAT !!!  {AddTimestamp(message)}"));
     }
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using Repo2.SDK.WPF45.Serialization;
+using PocketHub.Client.Lib.UserInterfaces.Logging;
 
 namespace PocketHub.Server.Lib.UserAccounts
 {
@@ -17,16 +18,18 @@ namespace PocketHub.Server.Lib.UserAccounts
         private IFileSystemAccesor _fs;
         private BsonMapper         _bMapr;
         private string             _dbPath;
-
+        private ActivityLogVM      _log;
 
         public const string COMMON_DIR      = "Common";
         public const string DB_FILENAME     = "UsersRepo1.LiteDB3";
         public const string COLLECTION_NAME = "v1";
 
 
-        public UserAccountsLiteDbRepo1(IFileSystemAccesor fileSystemAccesor)
+        public UserAccountsLiteDbRepo1(IFileSystemAccesor fileSystemAccesor,
+                                       ActivityLogVM activityLogVM)
         {
             _fs    = fileSystemAccesor;
+            _log   = activityLogVM;
             _bMapr = new BsonMapper();
 
             _bMapr.RegisterAutoId<uint>(v => v == 0,
@@ -42,13 +45,21 @@ namespace PocketHub.Server.Lib.UserAccounts
                 if (col.Count() > 0) return;
 
                 var seedRecs = _fs.ReadDesktopJsonFile<List<UserAccount>>("users_seed.json");
+                _log.Trace($"Seeding {seedRecs.Count} user account records ...");
                 using (var trans = db.BeginTrans())
                 {
-                    foreach (var rec in seedRecs)
+                    try
                     {
-                        col.Insert(rec);
+                        foreach (var rec in seedRecs)
+                        {
+                            if (rec == null) continue;
+                            _log.Trace(Json.Serialize(rec));
+                            col.Insert(rec);
+                        }
+                        trans.Commit();
                     }
-                    trans.Commit();
+                    catch (Exception ex)
+                        { _log.Unexpected(ex); }
                 }
             }
         }

@@ -45,20 +45,20 @@ namespace PocketHub.Server.Lib.Authorization
         {
             if (!methodRoles.Any())
             {
-                _log.Trace("method has no roles restriction (allowing...)");
+                _log.Threat("Method has no role restrictions (Allowing...)");
                 return true;
             }
             var methodRolesLCase = methodRoles.Select(x => x.ToLower()).ToList();
 
             if (usrRoles == null)
             {
-                _log.Trace("user roles list is NULL (denying...)");
+                _log.Threat("user roles list is NULL (denying...)");
                 return false;
             }
 
             if (!usrRoles.Any())
             {
-                _log.Trace("user has no roles (denying...)");
+                _log.Threat("user has no roles (denying...)");
                 return false;
             }
 
@@ -73,30 +73,57 @@ namespace PocketHub.Server.Lib.Authorization
                 }
             }
 
-            _log.Trace($"no match (denying...)");
+            _log.Threat($"no match (denying...)");
             return false;
         }
 
 
         private UserAccount GetAuthenticAccount(string loginName, string authToken)
         {
-            if (loginName.IsBlank() || authToken.IsBlank()) return null;
+            if (loginName.IsBlank()) return null;
+            //_log.Trace("loginName ain't blank. Allowing ...");
+
+            if (authToken.IsBlank()) return null;
+            //_log.Trace("authToken ain't blank. Allowing ...");
+
             var acct = _repo.FindAccount(loginName);
-            if (acct == null) return null;
-            if (acct.IsBlocked) return null;
+            if (acct == null)
+            {
+                _log.Threat($"No such user: “{loginName}”.");
+                return null;
+            }
+
+            if (acct.IsBlocked)
+            {
+                _log.Threat($"Blocked user account: “{loginName}”.");
+                return null;
+            }
+
             if (!IsValidToken(acct, authToken)) return null;
+
             return acct;
         }
 
 
         private bool IsValidToken(UserAccount acct, string authToken)
         {
+            //var pwd = "abc";
+            //_log.Trace($"_cfg.SharedKey: {_cfg.SharedKey}");
+            //_log.Trace($"acct.SaltedKeyHash: {acct.SaltedKeyHash}");
+            //_log.Trace($"salted key hash for password “{pwd}” : “{(acct.LoginName + pwd + _cfg.SharedKey).SHA1ForUTF8()}”");
+
             //todo: replace this with HMAC
+
             var expctd = ( acct.LoginName 
                        +   acct.SaltedKeyHash 
                        +   _cfg.SharedKey ).SHA1ForUTF8();
 
-            return authToken == expctd;
+            if (authToken != expctd)
+            {
+                _log.Threat($"Invalid authToken. Expected “{expctd}” but got “{authToken}”.");
+                return false;
+            }
+            return true;
         }
     }
 }

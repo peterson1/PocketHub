@@ -96,7 +96,7 @@ namespace PocketHub.Client.Lib.ServiceProviders
 
         private string ComposeAuthToken(string loginName, string rawPassword, string sharedKey)
         {
-            var saltdKeyHash = (loginName + rawPassword).SHA1ForUTF8();
+            var saltdKeyHash = (loginName + rawPassword + sharedKey).SHA1ForUTF8();
             return (loginName + saltdKeyHash + sharedKey).SHA1ForUTF8();
         }
 
