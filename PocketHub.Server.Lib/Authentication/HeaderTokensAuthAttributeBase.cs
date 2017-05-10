@@ -26,18 +26,15 @@ namespace PocketHub.Server.Lib.Authentication
         {
             if (!request.IsNegotiating()) return true;
 
-            var userNme  = request.GetUserName();
-            if (userNme.IsBlank()) return false;
+            if (!TryGetCredentials(request, out string usrName,
+                                            out string authTokn)) return false;
 
-            var authTokn = request.GetAuthToken();
-            if (authTokn.IsBlank()) return false;
-
-            _log.Info($"Authenticating as “{userNme}” ...");
+            _log.Info($"Authenticating as “{usrName}” ...");
 
             var ok = false;
             try
             {
-                ok = CanConnect(userNme, authTokn).ConfigureAwait(false).GetAwaiter().GetResult();
+                ok = CanConnect(usrName, authTokn).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -53,16 +50,14 @@ namespace PocketHub.Server.Lib.Authentication
 
         public override bool AuthorizeHubMethodInvocation(IHubIncomingInvokerContext invoker, bool appliesToMethod)
         {
-            var usrNme = invoker.Hub.Context.Request.GetUserName();
-            if (usrNme.IsBlank()) return false;
+            var request = invoker.Hub.Context.Request;
 
-            var authTokn = invoker.Hub.Context.Request.GetAuthToken();
-            if (authTokn.IsBlank()) return false;
-
+            if (!TryGetCredentials(request, out string usrName, 
+                                            out string authTokn)) return false;
             var ok = false;
             try
             {
-                ok = CanInvoke(usrNme, authTokn, invoker.MethodDescriptor)
+                ok = CanInvoke(usrName, authTokn, invoker.MethodDescriptor)
                     .ConfigureAwait(false).GetAwaiter().GetResult();
             }
             catch (Exception ex)
@@ -74,6 +69,20 @@ namespace PocketHub.Server.Lib.Authentication
 
             if (!ok) _log.Info("Invocation denied.");
             return ok;
+        }
+
+
+        private bool TryGetCredentials(IRequest request, 
+            out string usrName, out string authTokn)
+        {
+            authTokn = null;
+            usrName  = request.GetUserName();
+            if (usrName.IsBlank()) return false;
+
+            authTokn = request.GetAuthToken();
+            if (authTokn.IsBlank()) return false;
+
+            return true;
         }
     }
 }
