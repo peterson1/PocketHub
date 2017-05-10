@@ -83,18 +83,18 @@ namespace PocketHub.Server.Lib.UserAccounts
         }
 
 
-        public Dictionary<int, string> GetDictionary()
-        {
-            var dict = new Dictionary<int, string>();
-            using (var db = CreateConnection())
-            {
-                var col = db.GetCollection<UserAccount>(COLLECTION_NAME);
+        //public Dictionary<int, string> GetDictionary()
+        //{
+        //    var dict = new Dictionary<int, string>();
+        //    using (var db = CreateConnection())
+        //    {
+        //        var col = db.GetCollection<UserAccount>(COLLECTION_NAME);
 
-                foreach (var usr in col.FindAll())
-                    dict.Add((int)usr.Id, usr.FullName);
-            }
-            return dict;
-        }
+        //        foreach (var usr in col.FindAll())
+        //            dict.Add((int)usr.Id, usr.FullName);
+        //    }
+        //    return dict;
+        //}
 
 
         public UserAccount FindAccount(string loginName)
@@ -107,6 +107,9 @@ namespace PocketHub.Server.Lib.UserAccounts
                 col.EnsureIndex(x => x.LoginName, true);
 
                 var matches = col.Find(x => x.LoginName == loginName).ToList();
+                if (!matches.Any())
+                    matches = FindByLoginNameIgnoreCase(loginName, col);
+
                 if (!matches.Any()) return null;
 
                 if (matches.Count > 1)
@@ -114,6 +117,27 @@ namespace PocketHub.Server.Lib.UserAccounts
 
                 return matches.Single();
             }
+        }
+
+
+        public UserAccount FindAccount(int userId)
+        {
+            using (var db = CreateConnection())
+            {
+                var col = db.GetCollection<UserAccount>(COLLECTION_NAME);
+                return col.FindById(userId);
+            }
+        }
+
+
+        private List<UserAccount> FindByLoginNameIgnoreCase(string loginName, LiteCollection<UserAccount> col)
+        {
+            foreach (var usr in col.FindAll())
+            {
+                if (usr.LoginName.ToLower() == loginName.ToLower())
+                    return new List<UserAccount> { usr };
+            }
+            return new List<UserAccount>();
         }
 
 

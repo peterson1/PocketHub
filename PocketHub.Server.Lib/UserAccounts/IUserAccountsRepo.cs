@@ -7,6 +7,6 @@ namespace PocketHub.Server.Lib.UserAccounts
     {
         Task<UserAccount>  FindAccountAsync  (string loginName);
         UserAccount        FindAccount       (string loginName);
-        Dictionary<int, string> GetDictionary();
+        UserAccount        FindAccount       (int userId);
     }
 }
