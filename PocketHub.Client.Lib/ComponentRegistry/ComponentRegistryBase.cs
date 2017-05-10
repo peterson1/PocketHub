@@ -1,9 +1,8 @@
 ﻿using Autofac;
+using Autofac.Builder;
 using Autofac.Core;
-using PocketHub.Client.Lib.Authentication;
 using PocketHub.Client.Lib.Configuration;
 using PocketHub.Client.Lib.UserInterfaces.Logging;
-using Repo2.Core.ns11.Authentication;
 using Repo2.SDK.WPF45.ComponentRegistry;
 using Repo2.SDK.WPF45.Exceptions;
 using Repo2.SDK.WPF45.Extensions.IOCExtensions;
@@ -15,21 +14,28 @@ namespace PocketHub.Client.Lib.ComponentRegistry
 {
     public abstract class ComponentRegistryBase : IDisposable
     {
-        private ILifetimeScope _scope;
+        private ILifetimeScope   _scope;
+        private ContainerBuilder _buildr;
 
-        public ComponentRegistryBase(Application app)
+        public ComponentRegistryBase(Application app, bool beginScope = true)
         {
             app.SetTemplate<ActivityLogVM, ActivityLogUI>();
-
             SetDataTemplates(app);
 
-            var containr = RegisterAllComponents();
-            _scope = containr.BeginLifetimeScope();
+            _buildr = CreateContainerBuilder();
+            if (beginScope) BeginLifetimeScope();
         }
-
 
         protected abstract void  SetDataTemplates          (Application app);
         protected abstract void  RegisterClientComponents  (ContainerBuilder b);
+
+
+        public void BeginLifetimeScope()
+            => _scope = _buildr.Build().BeginLifetimeScope();
+
+
+        public IRegistrationBuilder<T, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterSolo<T>()
+            => _buildr.RegisterType<T>().AsSelf().SingleInstance();
 
 
         public T Resolve<T>()
@@ -46,20 +52,18 @@ namespace PocketHub.Client.Lib.ComponentRegistry
         }
 
 
-        private IContainer RegisterAllComponents()
+        private ContainerBuilder CreateContainerBuilder()
         {
             var b = new ContainerBuilder();
             Repo2IoC.RegisterComponentsTo(ref b);
 
-            b.Solo<AuthServerTokenSetter>();
             b.Solo<ActivityLogVM>();
 
             RegisterClientComponents(b);
 
             var cfg = ClientSettings.LoadFile();
-            b.RegisterInstance(cfg).As<IR2Credentials>()
-                                   .AsSelf();
-            return b.Build();
+            b.RegisterInstance(cfg).AsSelf();
+            return b;
         }
 
 
