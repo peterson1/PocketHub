@@ -68,7 +68,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication\AuthServerTokenSetter.cs" />
     <Compile Include="ComponentRegistry\ComponentRegistryBase.cs" />
     <Compile Include="Configuration\ClientSettings.cs" />
     <Compile Include="ServiceContracts\IHubClient.cs" />

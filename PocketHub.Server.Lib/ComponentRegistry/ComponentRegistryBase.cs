@@ -51,8 +51,7 @@ namespace PocketHub.Server.Lib.ComponentRegistry
             RegisterHubComponents(b);
 
             var cfg = ServerSettings.LoadFile();
-            b.RegisterInstance(cfg).As<IR2Credentials>()
-                                   .AsSelf();
+            b.RegisterInstance(cfg).AsSelf();
             return b.Build();
         }
 
