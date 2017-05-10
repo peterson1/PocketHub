@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR.Hubs;
 using PocketHub.Client.Lib.UserInterfaces.Logging;
-using PocketHub.Server.Lib.Authentication;
 using PocketHub.Server.Lib.Configuration;
 using PocketHub.Server.Lib.UserAccounts;
 using Repo2.Core.ns11.Extensions.StringExtensions;
@@ -27,8 +26,8 @@ namespace PocketHub.Server.Lib.Authorization
         public async Task<bool> IsValidCredentials(string loginName, string authToken)
         {
             await Task.Delay(0);
-            var auth = GetAuthenticAccount(loginName, authToken);
-            return auth != null;
+            var acct = GetAuthenticAccount(loginName, authToken);
+            return acct != null;
         }
 
 
@@ -37,15 +36,18 @@ namespace PocketHub.Server.Lib.Authorization
             await Task.Delay(0);
             var acct = GetAuthenticAccount(loginName, authToken);
             if (acct == null) return false;
-            return HasRoleAccess(acct.Roles, hubMethod.GetRoles<PocketHubHeaderAuthAttribute>());
+            return HasRoleAccess(acct.Roles, hubMethod);
         }
 
 
-        private bool HasRoleAccess(List<string> usrRoles, List<string> methodRoles)
+        private bool HasRoleAccess(List<string> usrRoles, MethodDescriptor hubMethod)
         {
+            var methodName  = hubMethod.Name;
+            var methodRoles = hubMethod.GetRoles();
+
             if (!methodRoles.Any())
             {
-                _log.Threat("Method has no role restrictions (Allowing...)");
+                _log.Trace($"Method “{methodName}()” has no role restrictions. (Allowing access ...)");
                 return true;
             }
             var methodRolesLCase = methodRoles.Select(x => x.ToLower()).ToList();
@@ -120,7 +122,8 @@ namespace PocketHub.Server.Lib.Authorization
 
             if (authToken != expctd)
             {
-                _log.Threat($"Invalid authToken. Expected “{expctd}” but got “{authToken}”.");
+                //_log.Threat($"Invalid authToken. Expected “{expctd}” but got “{authToken}”.");
+                _log.Threat($"“{acct.LoginName}” attempted to login using invalid authToken.");
                 return false;
             }
             return true;
