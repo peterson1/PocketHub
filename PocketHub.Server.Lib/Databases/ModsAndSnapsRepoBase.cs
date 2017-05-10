@@ -16,20 +16,20 @@ namespace PocketHub.Server.Lib.Databases
         private HubSnapshotsDb1  <T> _snapsDB;
         private ActivityLogVM        _log;
 
+
+        protected virtual string GetActorName(UserAccount usr) => usr.FullName;
+
+
         public ModsAndSnapsRepoBase(IUserAccountsRepo userAccountsRepo, IFileSystemAccesor fs, ActivityLogVM activityLogVM)
         {
             _log     = activityLogVM;
             _modsDB  = new HubAlterationsDb1<T>(fs);
-            _snapsDB = new HubSnapshotsDb1<T>(fs, _modsDB);
+            _snapsDB = new HubSnapshotsDb1<T>(fs, _modsDB, 
+                userAccountsRepo, usr => GetActorName(usr));
 
             _modsDB .StatusChanged += (s, e) => SetStatus(e);
             _snapsDB.StatusChanged += (s, e) => SetStatus(e);
-
-            _snapsDB.ActorsDictionary = userAccountsRepo.GetDictionary();
         }
-
-
-        //protected abstract Dictionary<int, string> GetActorsDictionary();
 
 
         public Reply<uint> CreateNew(SubjectAlterations mods)
@@ -50,17 +50,6 @@ namespace PocketHub.Server.Lib.Databases
         }
 
 
-        //public Reply<bool> Update(SubjectAlterations mods)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-        //public Reply<T> GetById(uint id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
 
         public Reply<List<T>> GetAll()
         {
@@ -78,16 +67,6 @@ namespace PocketHub.Server.Lib.Databases
             SetStatus($"Query returned {list.Count:N0} ‹{TName}› records.");
             return new Reply<List<T>>(list);
         }
-
-
-        //public async Task<Reply<int>> CountAll()
-        //{
-        //    await Task.Delay(1);
-
-        //    //var count = await _modsDB.
-
-        //    throw new NotImplementedException();
-        //}
 
 
         private string TName => typeof(T).Name.Replace("DTO", "");

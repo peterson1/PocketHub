@@ -77,7 +77,7 @@ namespace PocketHub.Server.Lib.SignalRHubs
             => _usrs.FindAccount(Context.Request.GetUserName());
 
 
-        protected int? FindUserId(string userName)
-            => (int?)_usrs.FindAccount(userName)?.Id;
+        protected int? FindUserId(string loginName)
+            => (int?)_usrs.FindAccount(loginName)?.Id;
     }
 }
