@@ -103,6 +103,8 @@ namespace PocketHub.Client.Lib.ServiceProviders
 
         protected async Task<Reply<T>> Invoke<T>(string methodName, params object[] args)
         {
+            if (!IsConnected) throw Fault.BadCall(nameof(Connect));
+
             SetStatus($"Invoking ‹{HubName}›.{methodName}() ...");
             Reply<T> rep;
             try
@@ -111,7 +113,7 @@ namespace PocketHub.Client.Lib.ServiceProviders
             }
             catch (Exception ex)
             {
-                return Reply.Error<T>(ex.Info());
+                return Reply.Error<T>(ex.Info(true, true));
             }
             var msg = rep.Failed ? rep.ErrorsText
                     : $"Successfully returned ‹{typeof(T).Name}› [{rep.Result}]";
