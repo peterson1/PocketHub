@@ -5,6 +5,7 @@ using Repo2.Core.ns11.DataStructures;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions.StringExtensions;
 using Repo2.SDK.WPF45.ChangeNotification;
+using Repo2.SDK.WPF45.Encryption;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -54,8 +55,8 @@ namespace PocketHub.Client.Lib.ServiceProviders
             var tkn = ComposeAuthToken(usr, rawPassword, sharedKey);
 
             _conn = new HubConnection(url);
-            _conn.Headers.Add("username" , usr);
-            _conn.Headers.Add("auth-token", tkn);
+            _conn.Headers.Add("username"  , Encrypt(usr, sharedKey));
+            _conn.Headers.Add("auth-token", Encrypt(tkn, sharedKey));
 
             HandleConnectionEvents();
 
@@ -92,6 +93,10 @@ namespace PocketHub.Client.Lib.ServiceProviders
                 return Reply.Error("Failed to connect.");
             }
         }
+
+
+        private string Encrypt(string text, string key)
+            => AESThenHMAC.SimpleEncryptWithPassword(text, key);
 
 
         private string ComposeAuthToken(string loginName, string rawPassword, string sharedKey)

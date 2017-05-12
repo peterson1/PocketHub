@@ -133,7 +133,7 @@
     <Compile Include="SignalRHubs\SignalRHubBase.cs" />
     <Compile Include="UserAccounts\IUserAccountsRepo.cs" />
     <Compile Include="UserAccounts\UserAccount.cs" />
-    <Compile Include="UserAccounts\UserAccountsLiteDbRepo1.cs" />
+    <Compile Include="UserAccounts\UserAccountsLocalRepo1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ServerSettings.cs" />

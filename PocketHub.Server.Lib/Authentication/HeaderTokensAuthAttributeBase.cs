@@ -28,9 +28,6 @@ namespace PocketHub.Server.Lib.Authentication
 
             if (!TryGetCredentials(request, out string usrName,
                                             out string authTokn)) return false;
-
-            _log.Info($"Authenticating as “{usrName}” ...");
-
             var ok = false;
             try
             {

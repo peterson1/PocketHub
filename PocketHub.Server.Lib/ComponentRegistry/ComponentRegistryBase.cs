@@ -39,7 +39,7 @@ namespace PocketHub.Server.Lib.ComponentRegistry
             var b = new ContainerBuilder();
             Repo2IoC.RegisterComponentsTo(ref b);
 
-            b.Solo<IUserAccountsRepo, UserAccountsLiteDbRepo1>();
+            b.Solo<IUserAccountsRepo, UserAccountsLocalRepo1>();
             b.Solo<IUserAuthChecker, UserAuthChecker1>();
 
             b.Solo<ConnectionsTabVM<T>>();

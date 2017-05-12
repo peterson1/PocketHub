@@ -83,10 +83,7 @@ namespace PocketHub.Server.Lib.Authorization
         private UserAccount GetAuthenticAccount(string loginName, string authToken)
         {
             if (loginName.IsBlank()) return null;
-            //_log.Trace("loginName ain't blank. Allowing ...");
-
             if (authToken.IsBlank()) return null;
-            //_log.Trace("authToken ain't blank. Allowing ...");
 
             var acct = _repo.FindAccount(loginName);
             if (acct == null)
