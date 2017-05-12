@@ -29,7 +29,7 @@ namespace PocketHub.Client.Lib.UserInterfaces.MainWindows
             _client.StatusChanged       += (s, e) => ActivityLog.Info(e);
             _client.ConnectStateChanged += (s, e) => AppendToCaption(e.ToString());
 
-            ConnectCmd.ExecuteIfItCan();
+            //ConnectCmd.ExecuteIfItCan();
         }
 
 
