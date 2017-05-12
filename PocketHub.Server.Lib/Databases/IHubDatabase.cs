@@ -10,7 +10,7 @@ namespace PocketHub.Server.Lib.Databases
     {
         Reply<uint>     CreateNew (SubjectAlterations mods);
         Reply<List<T>>  GetAll    ();
-        //Reply<bool>     Update    (SubjectAlterations mods);
+        Reply<bool>     Update    (SubjectAlterations mods);
         //Reply<T>        GetById   (uint id) ;
         //Task<Reply<int>>      CountAll  ();
     }

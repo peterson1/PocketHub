@@ -69,6 +69,24 @@ namespace PocketHub.Server.Lib.Databases
         }
 
 
+        public Reply<bool> Update(SubjectAlterations mods)
+        {
+            SetStatus($"Updating stored ‹{TName}› (id: {mods.SubjectID}) ...");
+            bool changd;
+            try
+            {
+                changd = _modsDB.UpdateSubject(mods);
+            }
+            catch (Exception ex)
+            {
+                _log.Info(ex.Info(true, true));
+                return Reply.Error<bool>(ex.Info(false, false));
+            }
+            SetStatus($"Successfully updated ‹{TName}›.");
+            return new Reply<bool>(changd);
+        }
+
+
         private string TName => typeof(T).Name.Replace("DTO", "");
     }
 }
