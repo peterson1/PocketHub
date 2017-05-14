@@ -20,6 +20,8 @@ namespace PocketHub.Server.Lib.UserAccounts
         public UserAccountsLocalRepo1(ActivityLogVM activityLogVM, 
             IFileSystemAccesor fileSystemAccessor) : base(fileSystemAccessor)
         {
+            IsSeedEnabled = true;
+
             _log = activityLogVM;
             base.StatusChanged += (s, e) => _log.Info(e);
         }
