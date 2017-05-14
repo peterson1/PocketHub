@@ -14,6 +14,13 @@ namespace PocketHub.Server.Lib.SignalRHubs
             RegisterHubs();
 
             app.MapSignalR();
+
+            SetGlobalHostConfigurations();
+        }
+
+
+        protected virtual void SetGlobalHostConfigurations()
+        {
         }
 
 
