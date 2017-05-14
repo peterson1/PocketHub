@@ -7,6 +7,7 @@ using Repo2.Core.ns11.Extensions.StringExtensions;
 using Repo2.SDK.WPF45.ChangeNotification;
 using Repo2.SDK.WPF45.Encryption;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -127,6 +128,29 @@ namespace PocketHub.Client.Lib.ServiceProviders
             }
             var msg = rep.Failed ? rep.ErrorsText
                     : $"Successfully returned ‹{typeof(T).Name}› [{rep.Result}]";
+
+            SetStatus(msg);
+            return rep;
+        }
+
+
+        protected async Task<Reply<List<T>>> GetList <T>(string methodName, params object[] args)
+        {
+            if (!IsConnected) throw Fault.BadCall(nameof(Connect));
+
+            SetStatus($"Getting list via ‹{HubName}›.{methodName}() ...");
+            Reply<List<T>> rep;
+            try
+            {
+                rep = await _hub.Invoke<Reply<List<T>>>(methodName, args);
+            }
+            catch (Exception ex)
+            {
+                return Reply.Error<List<T>>(ex.Info(true, true));
+            }
+
+            var msg = rep.Failed ? rep.ErrorsText
+                    : $"Found {rep.Result.Count:N0} ‹{typeof(T).Name}› records.";
 
             SetStatus(msg);
             return rep;
