@@ -70,12 +70,13 @@ namespace PocketHub.Server.Lib.Authorization
             {
                 if (methodRolesLCase.Contains(usrRole))
                 {
-                    _log.Trace($"match: “{usrRole}” (allowing...)");
+                    //_log.Trace($"match: “{usrRole}” (allowing...)");
                     return true;
                 }
             }
 
-            _log.Threat($"no match (denying...)");
+            var roles = $"[{string.Join(", ", usrRoles)}]";
+            _log.Threat($"{roles} is not allowed to invoke “{methodName}”.");
             return false;
         }
 
