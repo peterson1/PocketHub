@@ -17,7 +17,7 @@ namespace PocketHub.Server.Lib.Databases
         private ActivityLogVM        _log;
 
 
-        protected virtual string GetActorName(UserAccount usr) => usr.FullName;
+        protected virtual string GetActorName(UserAccount usr) => usr?.FullName;
 
 
         public ModsAndSnapsRepoBase(IUserAccountsRepo userAccountsRepo, IFileSystemAccesor fs, ActivityLogVM activityLogVM)
@@ -42,8 +42,8 @@ namespace PocketHub.Server.Lib.Databases
             }
             catch (Exception ex)
             {
-                _log.Info(ex.Info(true, true));
-                return Reply.Error<uint>(ex.Info(false, false));
+                _log.Unexpected(ex);
+                return Reply.Error<uint>(ex.Info(true, true));
             }
             SetStatus($"Successfully created new ‹{TName}› (id: {id}).");
             return new Reply<uint>(id);
