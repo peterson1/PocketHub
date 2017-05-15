@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Owin;
+using PocketHub.Server.Lib.Configuration;
 
 namespace PocketHub.Server.Lib.SignalRHubs
 {
@@ -19,8 +20,12 @@ namespace PocketHub.Server.Lib.SignalRHubs
         }
 
 
-        protected virtual void SetGlobalHostConfigurations()
+        private void SetGlobalHostConfigurations()
         {
+            var cfg = ResolveHub<ServerSettings>();
+
+            if (cfg.AllowBigContent)
+                GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
         }
 
 
