@@ -11,31 +11,24 @@ namespace PocketHub.Server.Lib.Authentication
     public class PocketHubHeaderAuthAttribute : HeaderTokensAuthAttributeBase
     {
         private IUserAuthChecker _checkr;
-        private ServerSettings   _cfg;
 
         public PocketHubHeaderAuthAttribute() 
-            : base(ComponentRegistryBase.Resolve<ActivityLogVM>())
+            : base(ComponentRegistryBase.Resolve<ActivityLogVM>(),
+                   ComponentRegistryBase.Resolve<ServerSettings>())
         {
-            _cfg    = ComponentRegistryBase.Resolve<ServerSettings>();
             _checkr = ComponentRegistryBase.Resolve<IUserAuthChecker>();
         }
 
 
-        protected override Task<bool> CanConnect(string loginName, string authToken)
+        protected override Task<bool> CanConnect(string usr, string tkn)
         {
-            var usr = Decrypt(loginName);
-            var tkn = Decrypt(authToken);
             _log.Info($"Authenticating as “{usr}” ...");
-
             return _checkr.IsValidCredentials(usr, tkn);
         }
 
 
         protected override Task<bool> CanInvoke(string loginName, string authToken, MethodDescriptor hubMethod)
-            => _checkr.CanInvoke(Decrypt(loginName), Decrypt(authToken), hubMethod);
+            => _checkr.CanInvoke(loginName, authToken, hubMethod);
 
-
-        private string Decrypt(string text)
-            => AESThenHMAC.SimpleDecryptWithPassword(text, _cfg.SharedKey);
     }
 }

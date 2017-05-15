@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using PocketHub.Client.Lib.UserInterfaces.Logging;
 using PocketHub.Server.Lib.Authentication;
+using PocketHub.Server.Lib.Configuration;
 using PocketHub.Server.Lib.MainTabs.ConnectionsTab;
 using PocketHub.Server.Lib.UserAccounts;
 using Repo2.Core.ns11.ChangeNotification;
@@ -19,6 +20,7 @@ namespace PocketHub.Server.Lib.SignalRHubs
         }
 
 
+        private   ServerSettings    _cfg;
         protected ActivityLogVM     _log;
         private   IUserAccountsRepo _usrs;
         private   CurrentClientsVM  _clients;
@@ -26,8 +28,10 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
         public SignalRHubBase(ActivityLogVM activityLogVM,
                               IUserAccountsRepo userAccountsRepo,
-                              CurrentClientsVM currentClientsVM)
+                              CurrentClientsVM currentClientsVM,
+                              ServerSettings serverSettings)
         {
+            _cfg      = serverSettings;
             _log      = activityLogVM;
             _usrs     = userAccountsRepo;
             _clients  = currentClientsVM;
@@ -74,7 +78,7 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
 
         protected UserAccount CurrentUser 
-            => _usrs.FindAccount(Context.Request.GetUserName());
+            => _usrs.FindAccount(Context.Request.GetUserName(_cfg));
 
 
         protected int? FindUserId(string loginName)

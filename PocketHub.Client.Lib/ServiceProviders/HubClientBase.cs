@@ -102,10 +102,10 @@ namespace PocketHub.Client.Lib.ServiceProviders
 
         private string ComposeAuthToken(string loginName, string rawPassword, string sharedKey)
         {
-            if (sharedKey.Length < 12) throw Fault.BadArg(nameof(sharedKey), "be at least 12 characters");
             if (loginName  .IsBlank()) throw Fault.BlankText("Login Name");
             if (rawPassword.IsBlank()) throw Fault.BlankText("Password"  );
             if (sharedKey  .IsBlank()) throw Fault.BlankText("Shared Key");
+            if (sharedKey.Length < 12) throw Fault.BadArg(nameof(sharedKey), "be at least 12 characters");
 
             var saltdKeyHash = (loginName + rawPassword + sharedKey).SHA1ForUTF8();
             return (loginName + saltdKeyHash + sharedKey).SHA1ForUTF8();

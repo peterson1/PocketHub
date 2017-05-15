@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using PocketHub.Client.Lib.UserInterfaces.Logging;
+using PocketHub.Server.Lib.Configuration;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions.StringExtensions;
 using System;
@@ -11,10 +12,12 @@ namespace PocketHub.Server.Lib.Authentication
     public abstract class HeaderTokensAuthAttributeBase : AuthorizeAttribute
     {
         protected ActivityLogVM _log;
+        private ServerSettings  _cfg;
 
-        public HeaderTokensAuthAttributeBase(ActivityLogVM activityLogVM)
+        public HeaderTokensAuthAttributeBase(ActivityLogVM activityLogVM, ServerSettings serverSettings)
         {
             _log = activityLogVM;
+            _cfg = serverSettings;
         }
 
 
@@ -73,10 +76,10 @@ namespace PocketHub.Server.Lib.Authentication
             out string usrName, out string authTokn)
         {
             authTokn = null;
-            usrName  = request.GetUserName();
+            usrName  = request.GetUserName(_cfg);
             if (usrName.IsBlank()) return false;
 
-            authTokn = request.GetAuthToken();
+            authTokn = request.GetAuthToken(_cfg);
             if (authTokn.IsBlank()) return false;
 
             return true;
