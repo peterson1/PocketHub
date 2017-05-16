@@ -13,10 +13,10 @@ namespace PocketHub.Server.Lib.Authentication
         private IUserAuthChecker _checkr;
 
         public PocketHubHeaderAuthAttribute() 
-            : base(ComponentRegistryBase.Resolve<ActivityLogVM>(),
-                   ComponentRegistryBase.Resolve<ServerSettings>())
+            : base(StaticRegistry.Resolve<ActivityLogVM>(),
+                   StaticRegistry.Resolve<ServerSettings>())
         {
-            _checkr = ComponentRegistryBase.Resolve<IUserAuthChecker>();
+            _checkr = StaticRegistry.Resolve<IUserAuthChecker>();
         }
 
 

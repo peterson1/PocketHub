@@ -35,7 +35,7 @@ namespace PocketHub.Server.Lib.ComponentRegistry
             }
 
             var containr = RegisterAllComponents();
-            ComponentRegistryBase.BeginLifetimeScope(containr);
+            StaticRegistry.BeginLifetimeScope(containr);
             return ResolveMainWindowVM();
         }
 
@@ -65,7 +65,7 @@ namespace PocketHub.Server.Lib.ComponentRegistry
 
 
 
-        protected T Resolve<T>() => ComponentRegistryBase.Resolve<T>();
+        public T Resolve<T>() => StaticRegistry.Resolve<T>();
 
 
         protected virtual void SetDataTemplates(Application app)

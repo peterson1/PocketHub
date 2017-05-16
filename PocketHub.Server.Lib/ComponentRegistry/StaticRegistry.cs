@@ -15,7 +15,7 @@ using System.Windows;
 
 namespace PocketHub.Server.Lib.ComponentRegistry
 {
-    public static class ComponentRegistryBase
+    public static class StaticRegistry
     {
         private static ILifetimeScope _scope;
 

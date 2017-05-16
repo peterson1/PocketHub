@@ -113,7 +113,7 @@
     <Compile Include="Authorization\IUserAuthChecker.cs" />
     <Compile Include="Authorization\MethodDescriptorExtensions.cs" />
     <Compile Include="Authorization\UserAuthChecker1.cs" />
-    <Compile Include="ComponentRegistry\ComponentRegistryBase.cs" />
+    <Compile Include="ComponentRegistry\StaticRegistry.cs" />
     <Compile Include="ComponentRegistry\IWebAppStarter.cs" />
     <Compile Include="ComponentRegistry\ServerRegistryBase.cs" />
     <Compile Include="Databases\HubAlterationsDb1.cs" />
