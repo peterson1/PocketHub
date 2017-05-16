@@ -30,8 +30,12 @@ namespace PocketHub.Server.Lib.ComponentRegistry
             ComponentRegistryBase.BeginLifetimeScope(containr);
         }
 
-        protected abstract void SetDataTemplates      (Application app);
         protected abstract void RegisterHubComponents (ContainerBuilder b);
+
+
+        protected virtual void SetDataTemplates(Application app)
+        {
+        }
 
 
         private IContainer RegisterAllComponents()

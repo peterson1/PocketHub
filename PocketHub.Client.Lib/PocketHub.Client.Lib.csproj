@@ -72,6 +72,9 @@
     <Compile Include="Configuration\ClientSettings.cs" />
     <Compile Include="Configuration\TestClientSettings.cs" />
     <Compile Include="ServiceContracts\IHubClient.cs" />
+    <Compile Include="ServiceContracts\IObjectDBClient.cs" />
+    <Compile Include="ServiceContracts\IObjectDBReader.cs" />
+    <Compile Include="ServiceContracts\IObjectDBWriter.cs" />
     <Compile Include="ServiceProviders\HubClientBase.cs" />
     <Compile Include="UserInterfaces\Logging\ActivityLogUI.xaml.cs">
       <DependentUpon>ActivityLogUI.xaml</DependentUpon>
