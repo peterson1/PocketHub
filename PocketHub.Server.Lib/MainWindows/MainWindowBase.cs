@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace PocketHub.Server.Lib.MainWindows
 {
-    public abstract class MainWindowBase<T> : TabbedMainWindowBase
-        where T : HubsRegistryBase
+    public abstract class MainWindowBase : TabbedMainWindowBase
     {
 
-        private ServerToggleVM<T> _togl;
-        private ServerSettings    _cfg;
+        private ServerToggleVM _togl;
+        private ServerSettings _cfg;
 
 
         public MainWindowBase(ServerSettings serverSettings,
-                              ServerToggleVM<T> serverToggleVM,
-                              ConnectionsTabVM<T> connectionsTabVM,
+                              ServerToggleVM serverToggleVM,
+                              ConnectionsTabVM connectionsTabVM,
                               IFileSystemAccesor fs) : base(fs)
         {
             _cfg = serverSettings;

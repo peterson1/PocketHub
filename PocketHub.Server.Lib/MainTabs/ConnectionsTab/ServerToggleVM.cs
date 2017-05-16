@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin.Hosting;
+using PocketHub.Server.Lib.ComponentRegistry;
 using PocketHub.Server.Lib.Configuration;
 using PocketHub.Server.Lib.SignalRHubs;
 using PropertyChanged;
@@ -14,7 +15,7 @@ using System.Reflection;
 namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
 {
     [ImplementPropertyChanged]
-    public class ServerToggleVM<T> where T : HubsRegistryBase
+    public class ServerToggleVM
     {
         private      EventHandler _serverStarted;
         public event EventHandler  ServerStarted
@@ -32,10 +33,12 @@ namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
 
         private ServerSettings _cfg;
         private IDisposable    _webApp;
+        private IWebAppStarter _startr;
 
-        public ServerToggleVM(ServerSettings serverSettings)
+        public ServerToggleVM(ServerSettings serverSettings, IWebAppStarter webAppStarter)
         {
             _cfg           = serverSettings;
+            _startr        = webAppStarter;
             StartServerCmd = R2Command.Relay(StartServer, _ => !IsServerStarted, "Start Server");
             StopServerCmd  = R2Command.Relay(StopServer , _ =>  IsServerStarted, "Stop Server");
         }
@@ -50,7 +53,8 @@ namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
         {
             try
             {
-                _webApp = WebApp.Start<T>(_cfg.HubServerURL);
+                //_webApp = WebApp.Start<T>(_cfg.HubServerURL);
+                _webApp = _startr.StartWebApp(_cfg.HubServerURL);
             }
             catch (TargetInvocationException ex)
             {

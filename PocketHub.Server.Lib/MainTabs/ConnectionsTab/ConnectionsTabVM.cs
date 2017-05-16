@@ -1,15 +1,13 @@
 ﻿using PocketHub.Client.Lib.UserInterfaces.Logging;
-using PocketHub.Server.Lib.SignalRHubs;
 using PropertyChanged;
 using Repo2.SDK.WPF45.ViewModelTools;
 
 namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
 {
     [ImplementPropertyChanged]
-    public class ConnectionsTabVM<T> : R2ViewModelBase
-        where T : HubsRegistryBase
+    public class ConnectionsTabVM : R2ViewModelBase
     {
-        public ConnectionsTabVM(ServerToggleVM<T> serverToggleVM,
+        public ConnectionsTabVM(ServerToggleVM serverToggleVM,
                                 ActivityLogVM activityLogVM,
                                 CurrentClientsVM currentClientsVM)
         {
@@ -21,7 +19,7 @@ namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
         }
 
 
-        public ServerToggleVM<T>  ServerToggle    { get; }
+        public ServerToggleVM     ServerToggle    { get; }
         public CurrentClientsVM   CurrentClients  { get; }
         public ActivityLogVM      ActivityLog     { get; }
     }

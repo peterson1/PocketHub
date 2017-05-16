@@ -9,10 +9,13 @@ namespace PocketHub.ObjectDB.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            var win = new MainWindow1();
 
-            new ObjectDBComponents(this);
-            var win         = new MainWindow1();
-            win.DataContext = ObjectDBComponents.Resolve<MainWindowVM1>();
+            //new ObjectDBComponents(this);
+            //win.DataContext = ObjectDBComponents.Resolve<MainWindowVM1>();
+
+            win.DataContext = new ObjectDBRegistry().CreateMainVM(this);
+
             win.Show();
         }
     }

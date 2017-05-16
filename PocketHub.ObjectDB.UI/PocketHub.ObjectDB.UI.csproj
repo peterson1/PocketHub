@@ -39,9 +39,6 @@
     <Reference Include="Microsoft.Owin.Host.HttpListener, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.3.1.0\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
     </Reference>
-    <Reference Include="PocketHub.Server.Lib">
-      <HintPath>..\PocketHub.Server.Lib\bin\Release\PocketHub.Server.Lib.dll</HintPath>
-    </Reference>
     <Reference Include="Repo2.SDK.WPF45">
       <HintPath>..\..\Repo2\Repo2.SDK.WPF45\bin\Release\Repo2.SDK.WPF45.dll</HintPath>
     </Reference>
@@ -101,6 +98,10 @@
     <ProjectReference Include="..\PocketHub.ObjectDB.Lib\PocketHub.ObjectDB.Lib.csproj">
       <Project>{40ab0b1e-5039-4e3f-9b67-cef0737512c1}</Project>
       <Name>PocketHub.ObjectDB.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PocketHub.Server.Lib\PocketHub.Server.Lib.csproj">
+      <Project>{85b00994-2fea-4932-bc18-099802aa71fd}</Project>
+      <Name>PocketHub.Server.Lib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -118,14 +118,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ComponentRegistry\ObjectDBComponents.cs" />
+    <Compile Include="ComponentRegistry\ObjectDBRegistry.cs" />
     <Compile Include="Databases\SoloLocalObjectDB1.cs" />
     <Compile Include="MainWindows\MainWindow1.xaml.cs">
       <DependentUpon>MainWindow1.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindows\MainWindowVM1.cs" />
     <Compile Include="SignalRHubs\CompleteAccessHub1.cs" />
-    <Compile Include="SignalRHubs\ObjectDBHubs.cs" />
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
       <SubType>Code</SubType>

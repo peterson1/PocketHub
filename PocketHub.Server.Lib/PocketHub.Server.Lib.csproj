@@ -114,6 +114,7 @@
     <Compile Include="Authorization\MethodDescriptorExtensions.cs" />
     <Compile Include="Authorization\UserAuthChecker1.cs" />
     <Compile Include="ComponentRegistry\ComponentRegistryBase.cs" />
+    <Compile Include="ComponentRegistry\IWebAppStarter.cs" />
     <Compile Include="ComponentRegistry\ServerRegistryBase.cs" />
     <Compile Include="Databases\HubAlterationsDb1.cs" />
     <Compile Include="Databases\HubSnapshotsDb1.cs" />
@@ -130,7 +131,6 @@
       <DependentUpon>ServerToggleUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindows\MainWindowBase.cs" />
-    <Compile Include="SignalRHubs\HubsRegistryBase.cs" />
     <Compile Include="SignalRHubs\SignalRHubBase.cs" />
     <Compile Include="UserAccounts\IUserAccountsRepo.cs" />
     <Compile Include="UserAccounts\UserAccount.cs" />

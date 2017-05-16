@@ -15,53 +15,6 @@ using System.Windows;
 
 namespace PocketHub.Server.Lib.ComponentRegistry
 {
-    public abstract class ComponentRegistryBase<T>
-        where T : HubsRegistryBase
-    {
-        public ComponentRegistryBase(Application app)
-        {
-            if (app != null)
-            {
-                app.SetTemplate<ConnectionsTabVM<T>, ConnectionsTabUI>();
-                SetDataTemplates(app);
-            }
-
-            var containr = RegisterAllComponents();
-            ComponentRegistryBase.BeginLifetimeScope(containr);
-        }
-
-        protected abstract void RegisterHubComponents (ContainerBuilder b);
-
-
-        protected virtual void SetDataTemplates(Application app)
-        {
-        }
-
-
-        private IContainer RegisterAllComponents()
-        {
-            var b = new ContainerBuilder();
-            Repo2IoC.RegisterComponentsTo(ref b);
-
-            b.Solo<IUserAccountsRepo, UserAccountsLocalRepo1>();
-            b.Solo<IUserAuthChecker, UserAuthChecker1>();
-
-            b.Solo<ConnectionsTabVM<T>>();
-            b.Solo<ServerToggleVM<T>>();
-
-            b.Solo<CurrentClientsVM>();
-            b.Solo<ActivityLogVM>();
-
-            RegisterHubComponents(b);
-
-            var cfg = ServerSettings.LoadFile();
-            b.RegisterInstance(cfg).AsSelf();
-            return b.Build();
-        }
-
-
-    }
-
     public static class ComponentRegistryBase
     {
         private static ILifetimeScope _scope;
