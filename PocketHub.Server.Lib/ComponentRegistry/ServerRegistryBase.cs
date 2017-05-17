@@ -1,20 +1,16 @@
 ﻿using Autofac;
-using Autofac.Core;
+using Microsoft.AspNet.SignalR;
+using Owin;
 using PocketHub.Client.Lib.UserInterfaces.Logging;
 using PocketHub.Server.Lib.Authorization;
 using PocketHub.Server.Lib.Configuration;
 using PocketHub.Server.Lib.MainTabs.ConnectionsTab;
-using PocketHub.Server.Lib.SignalRHubs;
 using PocketHub.Server.Lib.UserAccounts;
-using Repo2.Core.ns11.Exceptions;
 using Repo2.SDK.WPF45.ComponentRegistry;
-using Repo2.SDK.WPF45.Exceptions;
 using Repo2.SDK.WPF45.Extensions.IOCExtensions;
 using Repo2.SDK.WPF45.Extensions.ViewModelExtensions;
-using System.Windows;
 using System;
-using Owin;
-using Microsoft.AspNet.SignalR;
+using System.Windows;
 
 namespace PocketHub.Server.Lib.ComponentRegistry
 {
@@ -31,6 +27,8 @@ namespace PocketHub.Server.Lib.ComponentRegistry
             if (app != null)
             {
                 app.SetTemplate<ConnectionsTabVM, ConnectionsTabUI>();
+                app.SetTemplate<ActivityLogVM, ActivityLogUI>();
+                AddResourceDictionaries(app);
                 SetDataTemplates(app);
             }
 
@@ -38,7 +36,6 @@ namespace PocketHub.Server.Lib.ComponentRegistry
             StaticRegistry.BeginLifetimeScope(containr);
             return ResolveMainWindowVM();
         }
-
 
         public void Configuration(IAppBuilder app)
         {
@@ -69,6 +66,11 @@ namespace PocketHub.Server.Lib.ComponentRegistry
 
 
         protected virtual void SetDataTemplates(Application app)
+        {
+        }
+
+
+        protected virtual void AddResourceDictionaries(Application app)
         {
         }
 
