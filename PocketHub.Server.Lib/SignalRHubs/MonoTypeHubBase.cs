@@ -8,6 +8,8 @@ using PocketHub.Server.Lib.UserAccounts;
 using Repo2.Core.ns11.DataStructures;
 using Repo2.Core.ns11.FileSystems;
 using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 
 namespace PocketHub.Server.Lib.SignalRHubs
 {
@@ -32,11 +34,34 @@ namespace PocketHub.Server.Lib.SignalRHubs
         }
 
 
+        public async Task<Reply<List<T>>> GetAll()
+        {
+            await Task.Delay(0);
+            return new Reply<List<T>>(_db.FindAll());
+        }
+
+
         [PocketHubHeaderAuth(Roles = "Migrator")]
         public async Task<Reply<uint>>  Insert (T newRecord)
         {
             await Task.Delay(0);
             return new Reply<uint>(_db.Insert(newRecord));
+        }
+
+
+        [PocketHubHeaderAuth(Roles = "Migrator")]
+        public async Task<Reply<uint>> BatchInsert(IEnumerable<T> newRecords)
+        {
+            await Task.Delay(0);
+            return new Reply<uint>(_db.BatchInsert(newRecords));
+        }
+
+
+        [PocketHubHeaderAuth(Roles = "Migrator")]
+        public async Task<Reply<uint>> DeleteAll()
+        {
+            await Task.Delay(0);
+            return new Reply<uint>(_db.DeleteAll());
         }
     }
 }
