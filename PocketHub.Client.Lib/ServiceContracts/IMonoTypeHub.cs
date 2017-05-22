@@ -1,4 +1,5 @@
 ﻿using Repo2.Core.ns11.DataStructures;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace PocketHub.Client.Lib.ServiceContracts
         Task<Reply<uint>>     BatchInsert  (IEnumerable<T> newRecords);
         Task<Reply<T>>        GetById      (uint id);
         Task<Reply<List<T>>>  GetAll       ();
+        Task<Reply<List<T>>>  GetByDates   (DateTime startDate, DateTime endDate);
         Task<Reply<uint>>     DeleteAll    ();
     }
 }

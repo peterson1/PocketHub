@@ -71,5 +71,12 @@ namespace PocketHub.Server.Lib.SignalRHubs
             await Task.Delay(0);
             return new Reply<uint>(_db.DeleteAll());
         }
+
+
+        public async Task<Reply<List<T>>> GetByDates(DateTime startDate, DateTime endDate)
+        {
+            await Task.Delay(0);
+            return new Reply<List<T>>(_db.FindByDates(startDate, endDate));
+        }
     }
 }

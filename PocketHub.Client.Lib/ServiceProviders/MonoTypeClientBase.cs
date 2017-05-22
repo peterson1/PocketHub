@@ -2,6 +2,7 @@
 using Repo2.Core.ns11.DataStructures;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace PocketHub.Client.Lib.ServiceProviders
 {
@@ -28,5 +29,9 @@ namespace PocketHub.Client.Lib.ServiceProviders
 
         public Task<Reply<uint>> BatchInsert(IEnumerable<T> newRecords)
             => Invoke<uint>(nameof(IMonoTypeHub<T>.BatchInsert), newRecords);
+
+
+        public Task<Reply<List<T>>> GetByDates(DateTime startDate, DateTime endDate)
+            => GetList<T>(nameof(IMonoTypeHub<T>.GetByDates), startDate, endDate);
     }
 }
