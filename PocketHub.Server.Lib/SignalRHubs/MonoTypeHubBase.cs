@@ -10,6 +10,7 @@ using Repo2.Core.ns11.FileSystems;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using Repo2.Core.ns11.Exceptions;
 
 namespace PocketHub.Server.Lib.SignalRHubs
 {
@@ -53,7 +54,14 @@ namespace PocketHub.Server.Lib.SignalRHubs
         public async Task<Reply<uint>> BatchInsert(IEnumerable<T> newRecords)
         {
             await Task.Delay(0);
-            return new Reply<uint>(_db.BatchInsert(newRecords));
+            try
+            {
+                return new Reply<uint>(_db.BatchInsert(newRecords));
+            }
+            catch (Exception ex)
+            {
+                return Reply.Error<uint>(ex.Info());
+            }
         }
 
 
