@@ -10,6 +10,7 @@ namespace PocketHub.Server.Lib.UserAccounts
         public string        ShortName      { get; set; }
         public bool          IsBlocked      { get; set; }
         public string        SaltedKeyHash  { get; set; }
+        public string        Remarks        { get; set; }
         public List<string>  Roles          { get; set; }
     }
 }
