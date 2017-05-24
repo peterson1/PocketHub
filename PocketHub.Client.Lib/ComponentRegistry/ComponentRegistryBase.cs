@@ -2,6 +2,7 @@
 using Autofac.Builder;
 using Autofac.Core;
 using PocketHub.Client.Lib.Configuration;
+using PocketHub.Client.Lib.ServiceProviders;
 using PocketHub.Client.Lib.UserInterfaces.Logging;
 using Repo2.SDK.WPF45.ComponentRegistry;
 using Repo2.SDK.WPF45.Exceptions;
@@ -58,6 +59,7 @@ namespace PocketHub.Client.Lib.ComponentRegistry
             Repo2IoC.RegisterComponentsTo(ref b);
 
             b.Solo<ActivityLogVM>();
+            b.Solo<UserAccountClient>();
 
             RegisterClientComponents(b);
 

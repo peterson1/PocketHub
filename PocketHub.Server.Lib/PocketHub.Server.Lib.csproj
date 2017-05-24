@@ -149,6 +149,7 @@
     <Compile Include="MainWindows\MainWindowBase.cs" />
     <Compile Include="SignalRHubs\MonoTypeHubBase.cs" />
     <Compile Include="SignalRHubs\SignalRHubBase.cs" />
+    <Compile Include="SignalRHubs\UserAccountHub.cs" />
     <Compile Include="UserAccounts\IUserAccountsRepo.cs" />
     <Compile Include="UserAccounts\UserAccount.cs" />
     <Compile Include="UserAccounts\UserAccountsLocalRepo1.cs" />

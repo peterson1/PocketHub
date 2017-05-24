@@ -73,11 +73,10 @@
     <Compile Include="Configuration\TestClientSettings.cs" />
     <Compile Include="ServiceContracts\IHubClient.cs" />
     <Compile Include="ServiceContracts\IMonoTypeHub.cs" />
-    <Compile Include="ServiceContracts\IObjectDBClient.cs" />
-    <Compile Include="ServiceContracts\IObjectDBReader.cs" />
-    <Compile Include="ServiceContracts\IObjectDBWriter.cs" />
+    <Compile Include="ServiceContracts\IUserAccountReader.cs" />
     <Compile Include="ServiceProviders\HubClientBase.cs" />
     <Compile Include="ServiceProviders\MonoTypeClientBase.cs" />
+    <Compile Include="ServiceProviders\UserAccountClient.cs" />
     <Compile Include="UserInterfaces\Logging\ActivityLogUI.xaml.cs">
       <DependentUpon>ActivityLogUI.xaml</DependentUpon>
     </Compile>

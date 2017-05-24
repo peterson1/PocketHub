@@ -22,7 +22,7 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
         protected ServerSettings    _cfg;
         protected ActivityLogVM     _log;
-        private   IUserAccountsRepo _usrs;
+        protected IUserAccountsRepo _usrs;
         private   CurrentClientsVM  _clients;
 
 

@@ -3,6 +3,7 @@ using PocketHub.Client.Lib.UserInterfaces.Logging;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.FileSystems;
 using Repo2.SDK.WPF45.Databases;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -66,6 +67,11 @@ namespace PocketHub.Server.Lib.UserAccounts
             fs.CreateDir(Path.GetDirectoryName(path));
             return path;
         }
+
+
+        public List<Tuple<uint, string>> GetIDsAndRemarks()
+            => FindAll().Select(usr 
+                => new Tuple<uint, string>(usr.Id, usr.Remarks)).ToList();
 
 
         public async Task<UserAccount> FindAccountAsync(string loginName)

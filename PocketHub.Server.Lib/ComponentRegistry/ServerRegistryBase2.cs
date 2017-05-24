@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using PocketHub.Server.Lib.MainWindows;
+using PocketHub.Server.Lib.SignalRHubs;
 using Repo2.SDK.WPF45.Extensions.IOCExtensions;
 using System;
 using System.Windows;
@@ -14,6 +15,7 @@ namespace PocketHub.Server.Lib.ComponentRegistry
         protected override void RegisterHubComponents(ContainerBuilder b)
         {
             b.Solo<MainHubWindowVM1>();
+            b.Hub<UserAccountHub>();
 
             RegisterServerComponents(b);
         }
