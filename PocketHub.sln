@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketHub.Server.Lib", "Poc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketHub.Client.Lib", "PocketHub.Client.Lib\PocketHub.Client.Lib.csproj", "{FD6C203A-9FFC-449B-9D5B-174B80E07DBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketHub.ObjectDB.UI", "PocketHub.ObjectDB.UI\PocketHub.ObjectDB.UI.csproj", "{A9C7F609-8ED0-48A0-A6FB-F22EE23098A6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketHub.ObjectDB.Lib", "PocketHub.ObjectDB.Lib\PocketHub.ObjectDB.Lib.csproj", "{40AB0B1E-5039-4E3F-9B67-CEF0737512C1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,14 +21,6 @@ Global
 		{FD6C203A-9FFC-449B-9D5B-174B80E07DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD6C203A-9FFC-449B-9D5B-174B80E07DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD6C203A-9FFC-449B-9D5B-174B80E07DBF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9C7F609-8ED0-48A0-A6FB-F22EE23098A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9C7F609-8ED0-48A0-A6FB-F22EE23098A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9C7F609-8ED0-48A0-A6FB-F22EE23098A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9C7F609-8ED0-48A0-A6FB-F22EE23098A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40AB0B1E-5039-4E3F-9B67-CEF0737512C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40AB0B1E-5039-4E3F-9B67-CEF0737512C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40AB0B1E-5039-4E3F-9B67-CEF0737512C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40AB0B1E-5039-4E3F-9B67-CEF0737512C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

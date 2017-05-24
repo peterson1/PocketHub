@@ -95,10 +95,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PocketHub.ObjectDB.Lib\PocketHub.ObjectDB.Lib.csproj">
-      <Project>{40ab0b1e-5039-4e3f-9b67-cef0737512c1}</Project>
-      <Name>PocketHub.ObjectDB.Lib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PocketHub.Server.Lib\PocketHub.Server.Lib.csproj">
       <Project>{85b00994-2fea-4932-bc18-099802aa71fd}</Project>
       <Name>PocketHub.Server.Lib</Name>
