@@ -8,6 +8,11 @@ namespace PocketHub.Server.Lib.MainWindows
         public MainHubWindow1()
         {
             InitializeComponent();
+
+            //Loaded += (a, b) =>
+            //{
+            //    trayIcon.ToolTipText = VM.Caption;
+            //};
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -21,5 +26,8 @@ namespace PocketHub.Server.Lib.MainWindows
             this.Show();
             this.Activate();
         }
+
+
+        //private MainHubWindowVM1 VM => DataContext as MainHubWindowVM1;
     }
 }

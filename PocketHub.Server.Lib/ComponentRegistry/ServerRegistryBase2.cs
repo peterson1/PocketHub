@@ -14,6 +14,8 @@ namespace PocketHub.Server.Lib.ComponentRegistry
 
         protected override void RegisterHubComponents(ContainerBuilder b)
         {
+            MainHubWindowVM1.Title = MainWindowTitle;
+
             b.Solo<MainHubWindowVM1>();
             b.Hub<UserAccountHub>();
 
@@ -24,6 +26,9 @@ namespace PocketHub.Server.Lib.ComponentRegistry
         protected override void RegisterHubs()
         {
         }
+
+
+        protected virtual string MainWindowTitle => "Hub Server";
 
 
         protected override object ResolveMainWindowVM()

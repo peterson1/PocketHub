@@ -7,11 +7,13 @@ namespace PocketHub.Server.Lib.MainWindows
 {
     public class MainHubWindowVM1 : MainWindowBase
     {
-        protected override string CaptionPrefix => "Hub";
+        protected override string CaptionPrefix => Title;
 
         public MainHubWindowVM1(ActivityLogVM activityLogVM, ServerSettings serverSettings, ServerToggleVM serverToggleVM, ConnectionsTabVM connectionsTabVM, IFileSystemAccesor fs) : base(serverSettings, serverToggleVM, connectionsTabVM, fs)
         {
             AddAsTab(activityLogVM);
         }
+
+        public static string Title { get; set; }
     }
 }
