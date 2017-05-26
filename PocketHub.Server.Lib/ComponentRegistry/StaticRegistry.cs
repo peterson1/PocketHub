@@ -11,6 +11,7 @@ using Repo2.SDK.WPF45.ComponentRegistry;
 using Repo2.SDK.WPF45.Exceptions;
 using Repo2.SDK.WPF45.Extensions.IOCExtensions;
 using Repo2.SDK.WPF45.Extensions.ViewModelExtensions;
+using System;
 using System.Windows;
 
 namespace PocketHub.Server.Lib.ComponentRegistry
@@ -23,6 +24,23 @@ namespace PocketHub.Server.Lib.ComponentRegistry
         public static void BeginLifetimeScope(IContainer containr)
         {
             _scope = containr.BeginLifetimeScope();
+        }
+
+
+        public static object Resolve(Type type)
+        {
+            if (_scope == null)
+                throw Fault.BadCall(nameof(BeginLifetimeScope));
+
+            try
+            {
+                return _scope.Resolve(type);
+            }
+            catch (DependencyResolutionException ex)
+            {
+                Alerter.ShowError("Resolver Error", ex.GetMessage());
+                return null;
+            }
         }
 
 
