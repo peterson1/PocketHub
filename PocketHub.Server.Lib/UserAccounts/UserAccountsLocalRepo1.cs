@@ -85,6 +85,12 @@ namespace PocketHub.Server.Lib.UserAccounts
             => base.FindById((uint)userId);
 
 
+        public override void EnsureIndeces(LiteCollection<UserAccount> col)
+        {
+            col.EnsureIndex(x => x.LoginName, true);
+        }
+
+
         protected override string GetJsonSeedFilename() => "users_seed.json";
     }
 }

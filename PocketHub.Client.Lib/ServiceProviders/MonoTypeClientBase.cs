@@ -19,6 +19,10 @@ namespace PocketHub.Client.Lib.ServiceProviders
             => Invoke<T>(nameof(IMonoTypeHub<T>.GetById), id);
 
 
+        public Task<Reply<uint>> CountAll()
+            => Invoke<uint>(nameof(IMonoTypeHub<T>.CountAll));
+
+
         public Task<Reply<List<T>>> GetAll()
             => GetList<T>(nameof(IMonoTypeHub<T>.GetAll));
 

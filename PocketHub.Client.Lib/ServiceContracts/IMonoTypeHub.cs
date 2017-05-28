@@ -10,6 +10,7 @@ namespace PocketHub.Client.Lib.ServiceContracts
         Task<Reply<uint>>     Insert       (T newRecord);
         Task<Reply<uint>>     BatchInsert  (IEnumerable<T> newRecords);
         Task<Reply<T>>        GetById      (uint id);
+        Task<Reply<uint>>     CountAll     ();
         Task<Reply<List<T>>>  GetAll       ();
         Task<Reply<List<T>>>  GetByDates   (DateTime startDate, DateTime endDate);
         Task<Reply<uint>>     DeleteAll    ();

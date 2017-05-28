@@ -46,7 +46,14 @@ namespace PocketHub.Server.Lib.SignalRHubs
         public async Task<Reply<uint>>  Insert (T newRecord)
         {
             await Task.Delay(0);
-            return new Reply<uint>(_db.Insert(newRecord));
+            try
+            {
+                return new Reply<uint>(_db.Insert(newRecord));
+            }
+            catch (Exception ex)
+            {
+                return Reply.Error<uint>(ex.Info(true, true));
+            }
         }
 
 
@@ -60,7 +67,7 @@ namespace PocketHub.Server.Lib.SignalRHubs
             }
             catch (Exception ex)
             {
-                return Reply.Error<uint>(ex.Info());
+                return Reply.Error<uint>(ex.Info(true, true));
             }
         }
 
@@ -70,6 +77,13 @@ namespace PocketHub.Server.Lib.SignalRHubs
         {
             await Task.Delay(0);
             return new Reply<uint>(_db.DeleteAll());
+        }
+
+
+        public async Task<Reply<uint>> CountAll()
+        {
+            await Task.Delay(0);
+            return new Reply<uint>(_db.CountAll());
         }
 
 
