@@ -50,6 +50,8 @@ namespace PocketHub.Client.Lib.ServiceProviders
 
         public async Task<Reply> Connect(string url, string usr, string rawPassword, string sharedKey)
         {
+            if (IsConnected) return Reply.Success();
+
             Disconnect();
 
             SetStatus($"Connecting to [{url}] as “{usr}” ...");
@@ -109,6 +111,28 @@ namespace PocketHub.Client.Lib.ServiceProviders
 
             var saltdKeyHash = (loginName + rawPassword + sharedKey).SHA1ForUTF8();
             return (loginName + saltdKeyHash + sharedKey).SHA1ForUTF8();
+        }
+
+
+        protected async Task<Reply> Invoke(string methodName, params object[] args)
+        {
+            if (!IsConnected) throw Fault.BadCall(nameof(Connect));
+
+            SetStatus($"Invoking ‹{HubName}›.{methodName}() ...");
+            Reply rep;
+            try
+            {
+                rep = await _hub.Invoke<Reply>(methodName, args);
+            }
+            catch (Exception ex)
+            {
+                return Reply.Error(ex.Info(true, true));
+            }
+            var msg = rep.Failed ? rep.ErrorsText
+                    : $"Successfully invoked {methodName}().";
+
+            SetStatus(msg);
+            return rep;
         }
 
 
