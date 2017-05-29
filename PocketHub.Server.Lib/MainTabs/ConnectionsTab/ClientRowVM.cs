@@ -21,5 +21,7 @@ namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
         public string        ConnectionState   { get; set; }
         public string        LastMessage       { get; set; }
         public DateTime      LastUpdate        { get; set; }
+
+        public string AllRoles => string.Join(", ", Identity?.Roles);
     }
 }

@@ -24,15 +24,15 @@
                                     ElementStyle="{StaticResource dg2ColCenter}"
                                     />
                 <DataGridTextColumn Header="user name"
-                                    Binding="{Binding Identity.Username}"
+                                    Binding="{Binding Identity.LoginName}"
                                     ElementStyle="{StaticResource dg2ColCenter}"
                                     />
                 <DataGridTextColumn Header="user ID"
-                                    Binding="{Binding Identity.UserId}"
+                                    Binding="{Binding Identity.Id}"
                                     ElementStyle="{StaticResource dg2ColCenter}"
                                     />
                 <DataGridTextColumn Header="roles"
-                                    Binding="{Binding Identity.AllRoles}"
+                                    Binding="{Binding AllRoles}"
                                     ElementStyle="{StaticResource dg2ColCenter}"
                                     />
                 <DataGridTextColumn Header="target hub"
