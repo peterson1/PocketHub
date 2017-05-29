@@ -2,7 +2,9 @@
 using Microsoft.AspNet.SignalR;
 using PocketHub.Server.Lib.MainWindows;
 using Repo2.SDK.WPF45.Extensions.IOCExtensions;
+using Repo2.SDK.WPF45.Extensions.ViewModelExtensions;
 using Repo2.SDK.WPF45.ViewModelTools;
+using System.Windows;
 
 namespace PocketHub.Server.Lib.ComponentRegistry
 {
@@ -16,11 +18,12 @@ namespace PocketHub.Server.Lib.ComponentRegistry
         }
 
 
-        public static void Tab<T>(this ContainerBuilder b)
-            where T : R2ViewModelBase
+        public static void Tab<TVM, TUI>(this ContainerBuilder b, Application app)
+            where TVM : R2ViewModelBase
         {
-            b.Solo<T>();
-            MainHubWindowVM1.TabTypes.Add(typeof(T));
+            b.Solo<TVM>();
+            app.SetTemplate<TVM, TUI>();
+            MainHubWindowVM1.TabTypes.Add(typeof(TVM));
         }
     }
 }

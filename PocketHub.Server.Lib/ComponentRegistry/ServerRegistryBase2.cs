@@ -9,17 +9,17 @@ namespace PocketHub.Server.Lib.ComponentRegistry
 {
     public abstract class ServerRegistryBase2 : ServerRegistryBase
     {
-        protected abstract void RegisterServerComponents(ContainerBuilder b);
+        protected abstract void RegisterServerComponents(ContainerBuilder b, Application app);
 
 
-        protected override void RegisterHubComponents(ContainerBuilder b)
+        protected override void RegisterHubComponents(ContainerBuilder b, Application app)
         {
             MainHubWindowVM1.Title = MainWindowTitle;
 
             b.Solo<MainHubWindowVM1>();
             b.Hub<UserAccountHub>();
 
-            RegisterServerComponents(b);
+            RegisterServerComponents(b, app);
         }
 
 

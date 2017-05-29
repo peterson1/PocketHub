@@ -19,7 +19,7 @@ namespace PocketHub.Server.Lib.ComponentRegistry
         public    abstract IDisposable  StartWebApp            (string hubServerUrl);
         protected abstract void         RegisterHubs           ();
         protected abstract object       ResolveMainWindowVM    ();
-        protected abstract void         RegisterHubComponents  (ContainerBuilder b);
+        protected abstract void         RegisterHubComponents  (ContainerBuilder b, Application app);
 
 
         public object CreateMainVM (Application app)
@@ -32,16 +32,16 @@ namespace PocketHub.Server.Lib.ComponentRegistry
                 SetDataTemplates(app);
             }
 
-            var containr = RegisterAllComponents();
+            var containr = RegisterAllComponents(app);
             StaticRegistry.BeginLifetimeScope(containr);
             return ResolveMainWindowVM();
         }
 
-        public void Configuration(IAppBuilder app)
+        public void Configuration(IAppBuilder appBuildr)
         {
             RegisterHubs();
 
-            app.MapSignalR();
+            appBuildr.MapSignalR();
 
             SetGlobalHostConfigurations();
         }
@@ -75,7 +75,7 @@ namespace PocketHub.Server.Lib.ComponentRegistry
         }
 
 
-        private IContainer RegisterAllComponents()
+        private IContainer RegisterAllComponents(Application app)
         {
             var b = new ContainerBuilder();
             Repo2IoC.RegisterComponentsTo(ref b);
@@ -89,7 +89,7 @@ namespace PocketHub.Server.Lib.ComponentRegistry
             b.Solo<CurrentClientsVM>();
             b.Solo<ActivityLogVM>();
 
-            RegisterHubComponents(b);
+            RegisterHubComponents(b, app);
 
             var cfg = ServerSettings.LoadFile();
             b.RegisterInstance(cfg).AsSelf();
