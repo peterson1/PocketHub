@@ -8,7 +8,8 @@ namespace PocketHub.Client.Lib.ServiceProviders
 {
     public abstract class MonoTypeClientBase<T> : HubClientBase, IMonoTypeHub<T>
     {
-        protected override string HubName => $"{typeof(T).Name}Hub";
+        protected override string HubName 
+            => $"{typeof(T).Name}Hub".Replace("DTO", "");
 
 
         public Task<Reply<uint>> Insert(T newRecord)
