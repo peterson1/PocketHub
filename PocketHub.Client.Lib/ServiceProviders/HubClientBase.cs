@@ -76,7 +76,10 @@ namespace PocketHub.Client.Lib.ServiceProviders
             }
             catch (HttpClientException ex)
             {
-                return Reply.Error($"[{(int)ex.Response.StatusCode}] {ex.Response.ReasonPhrase}");
+                //return Reply.Error($"[{(int)ex.Response.StatusCode}] {ex.Response.ReasonPhrase}");
+                var rep = Reply.Error($"[{(int)ex.Response.StatusCode}] {ex.Response.ReasonPhrase}");
+                rep.DetailedError = ex.Info(true, true);
+                return rep;
             }
             catch (Exception ex)
             {
