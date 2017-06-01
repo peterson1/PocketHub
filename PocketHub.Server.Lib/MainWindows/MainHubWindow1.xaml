@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:PocketHub.Server.Lib.MainWindows"
         mc:Ignorable="d"
         Title="{Binding Caption}" 
-        Width="900" Height="728"
+        Width="1360" Height="728"
         WindowStartupLocation="CenterScreen"
         SnapsToDevicePixels="True"
         Closing="Window_Closing"
