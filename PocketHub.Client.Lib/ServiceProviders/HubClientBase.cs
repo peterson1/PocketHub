@@ -184,6 +184,10 @@ namespace PocketHub.Client.Lib.ServiceProviders
         }
 
 
+        /// <summary>
+        /// Called by base class right after establishing hub connection.
+        /// Safe to override. Base method implementation is empty.
+        /// </summary>
         protected virtual void OnConnected()
         {
         }
