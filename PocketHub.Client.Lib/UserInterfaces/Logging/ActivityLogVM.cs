@@ -6,7 +6,7 @@ using System;
 
 namespace PocketHub.Client.Lib.UserInterfaces.Logging
 {
-    [ImplementPropertyChanged]
+    //[ImplementPropertyChanged]
     public class ActivityLogVM : R2ViewModelBase
     {
         public ActivityLogVM()

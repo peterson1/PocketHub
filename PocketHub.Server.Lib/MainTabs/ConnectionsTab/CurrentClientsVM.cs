@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
 {
-    [ImplementPropertyChanged]
+    //[ImplementPropertyChanged]
     public class CurrentClientsVM : R2ViewModelBase
     {
         public Observables<ClientRowVM> Rows { get; } = new Observables<ClientRowVM>();

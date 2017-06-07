@@ -10,13 +10,16 @@ using Repo2.Core.ns11.InputCommands;
 using Repo2.SDK.WPF45.Exceptions;
 using Repo2.SDK.WPF45.InputCommands;
 using System;
+using System.ComponentModel;
 using System.Reflection;
 
 namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
 {
-    [ImplementPropertyChanged]
-    public class ServerToggleVM
+    //[ImplementPropertyChanged]
+    public class ServerToggleVM : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
         private      EventHandler _serverStarted;
         public event EventHandler  ServerStarted
         {

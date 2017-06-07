@@ -4,7 +4,7 @@ using Repo2.SDK.WPF45.ViewModelTools;
 
 namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
 {
-    [ImplementPropertyChanged]
+    //[ImplementPropertyChanged]
     public class ConnectionsTabVM : R2ViewModelBase
     {
         public ConnectionsTabVM(ServerToggleVM serverToggleVM,
