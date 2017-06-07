@@ -3,10 +3,12 @@ using Repo2.SDK.WPF45.FileSystems;
 
 namespace PocketHub.Client.Lib.Configuration
 {
-    public class ClientSettings
+    public class ClientSettings : IHubCredentials
     {
-        public string  HubServerURL        { get; set; }
-        public string  SharedKey           { get; set; }
+        public string  HubServerURL   { get; set; }
+        public string  SharedKey      { get; set; }
+        public string  LoginName      { get; set; }
+        public string  LoginPassword  { get; set; }
 
 
         public static ClientSettings CreateDefault()

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
+using PocketHub.Client.Lib.Configuration;
 using PocketHub.Client.Lib.ServiceContracts;
 using Repo2.Core.ns11.ChangeNotification;
 using Repo2.Core.ns11.DataStructures;
@@ -47,7 +48,30 @@ namespace PocketHub.Client.Lib.ServiceProviders
         public ConnectionStatus  ConnectState  => GetConnectionState();
 
 
+        /// <summary>
+        /// Throws error if unable to connect.
+        /// </summary>
+        /// <param name="creds"></param>
+        /// <returns></returns>
+        public async Task Connect(IHubCredentials creds)
+        {
+            var rep = await Connect(creds.HubServerURL, 
+                                    creds.LoginName, 
+                                    creds.LoginPassword, 
+                                    creds.SharedKey);
+            if (rep.Failed)
+                throw new Exception(rep.ErrorsText);
+        }
 
+
+        /// <summary>
+        /// Wraps error as reply if unable to connect.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="usr"></param>
+        /// <param name="rawPassword"></param>
+        /// <param name="sharedKey"></param>
+        /// <returns></returns>
         public async Task<Reply> Connect(string url, string usr, string rawPassword, string sharedKey)
         {
             if (IsConnected) return Reply.Success();

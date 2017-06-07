@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="ComponentRegistry\ComponentRegistryBase.cs" />
     <Compile Include="Configuration\ClientSettings.cs" />
+    <Compile Include="Configuration\IHubCredentials.cs" />
     <Compile Include="Configuration\TestClientSettings.cs" />
     <Compile Include="ServiceContracts\IHubClient.cs" />
     <Compile Include="ServiceContracts\IMonoTypeHub.cs" />
