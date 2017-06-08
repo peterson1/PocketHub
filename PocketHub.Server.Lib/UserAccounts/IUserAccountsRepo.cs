@@ -6,9 +6,10 @@ namespace PocketHub.Server.Lib.UserAccounts
 {
     public interface IUserAccountsRepo
     {
-        Task<UserAccount>           FindAccountAsync  (string loginName);
-        UserAccount                 FindAccount       (string loginName);
-        UserAccount                 FindAccount       (int userId);
-        List<Tuple<uint, string>>   GetIDsAndRemarks  ();
+        Task<UserAccount>            FindAccountAsync        (string loginName);
+        UserAccount                  FindAccount             (string loginName);
+        UserAccount                  FindAccount             (int userId);
+        List<Tuple<uint, string>>    GetIDsAndRemarks        ();
+        List<Tuple<string, string>>  GetFullNamesAndRemarks  ();
     }
 }

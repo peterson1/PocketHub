@@ -13,5 +13,9 @@ namespace PocketHub.Client.Lib.ServiceProviders
 
         public Task<Reply<List<Tuple<uint, string>>>> GetIDsAndRemarks()
             => GetList<Tuple<uint, string>>(nameof(IUserAccountReader.GetIDsAndRemarks));
+
+
+        public Task<Reply<List<Tuple<string, string>>>> GetFullNamesAndRemarks()
+            => GetList<Tuple<string, string>>(nameof(IUserAccountReader.GetFullNamesAndRemarks));
     }
 }

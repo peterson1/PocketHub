@@ -33,5 +33,20 @@ namespace PocketHub.Server.Lib.SignalRHubs
                 return Reply.Error<List<Tuple<uint, string>>>(ex.Info());
             }
         }
+
+
+        [PocketHubHeaderAuth(Roles = "Migrator")]
+        public async Task<Reply<List<Tuple<string, string>>>> GetFullNamesAndRemarks()
+        {
+            await Task.Delay(0);
+            try
+            {
+                return new Reply<List<Tuple<string, string>>>(_usrs.GetFullNamesAndRemarks());
+            }
+            catch (Exception ex)
+            {
+                return Reply.Error<List<Tuple<string, string>>>(ex.Info());
+            }
+        }
     }
 }

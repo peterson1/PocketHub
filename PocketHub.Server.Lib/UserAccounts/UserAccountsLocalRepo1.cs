@@ -74,6 +74,11 @@ namespace PocketHub.Server.Lib.UserAccounts
                 => new Tuple<uint, string>(usr.Id, usr.Remarks)).ToList();
 
 
+        public List<Tuple<string, string>> GetFullNamesAndRemarks()
+            => FindAll().Select(usr
+                => new Tuple<string, string>(usr.FullName, usr.Remarks)).ToList();
+
+
         public async Task<UserAccount> FindAccountAsync(string loginName)
         {
             await Task.Delay(0);

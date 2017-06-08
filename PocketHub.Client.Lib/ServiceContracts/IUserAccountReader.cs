@@ -7,6 +7,7 @@ namespace PocketHub.Client.Lib.ServiceContracts
 {
     public interface IUserAccountReader
     {
-        Task<Reply<List<Tuple<uint, string>>>>  GetIDsAndRemarks  ();
+        Task<Reply<List<Tuple<uint, string>>>>    GetIDsAndRemarks        ();
+        Task<Reply<List<Tuple<string, string>>>>  GetFullNamesAndRemarks  ();
     }
 }
