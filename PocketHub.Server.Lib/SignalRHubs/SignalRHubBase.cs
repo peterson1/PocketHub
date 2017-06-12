@@ -7,11 +7,14 @@ using PocketHub.Server.Lib.UserAccounts;
 using Repo2.Core.ns11.ChangeNotification;
 using System;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace PocketHub.Server.Lib.SignalRHubs
 {
     public abstract class SignalRHubBase : Hub, IStatusChanger
     {
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
         private      EventHandler<string> _statusChanged;
         public event EventHandler<string>  StatusChanged
         {
@@ -24,7 +27,6 @@ namespace PocketHub.Server.Lib.SignalRHubs
         protected ActivityLogVM     _log;
         protected IUserAccountsRepo _usrs;
         private   CurrentClientsVM  _clients;
-
 
         public SignalRHubBase(ActivityLogVM activityLogVM,
                               IUserAccountsRepo userAccountsRepo,
@@ -83,5 +85,9 @@ namespace PocketHub.Server.Lib.SignalRHubs
 
         protected int? FindUserId(string loginName)
             => (int?)_usrs.FindAccount(loginName)?.Id;
+
+
+        public void RaisePropertyChanged(object sender, PropertyChangedEventArgs e)
+            => PropertyChanged?.Invoke(sender, e);
     }
 }
