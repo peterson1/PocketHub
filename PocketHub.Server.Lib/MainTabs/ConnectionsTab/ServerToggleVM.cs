@@ -1,8 +1,5 @@
-﻿using Microsoft.Owin.Hosting;
-using PocketHub.Server.Lib.ComponentRegistry;
+﻿using PocketHub.Server.Lib.ComponentRegistry;
 using PocketHub.Server.Lib.Configuration;
-using PocketHub.Server.Lib.SignalRHubs;
-using PropertyChanged;
 using Repo2.Core.ns11.ChangeNotification;
 using Repo2.Core.ns11.Exceptions;
 using Repo2.Core.ns11.Extensions.StringExtensions;
@@ -63,6 +60,10 @@ namespace PocketHub.Server.Lib.MainTabs.ConnectionsTab
             {
                 Alerter.ShowError($"Unable to start server at {_cfg.HubServerURL}", 
                                   $"You may need to pick a different port number.{L.F}{ex.Info()}");
+
+                Alerter.ShowInfo("Other Options:",
+                    $"1.)  Run the server as Administrator.{L.f}"
+                    + "2.)  netsh http add urlacl http://*:123456/ user=EVERYONE");
             }
             if (IsServerStarted) _serverStarted.Raise();
         }
