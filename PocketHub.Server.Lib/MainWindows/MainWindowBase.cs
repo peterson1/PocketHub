@@ -16,7 +16,6 @@ namespace PocketHub.Server.Lib.MainWindows
 
         public MainWindowBase(ServerSettings serverSettings,
                               ServerToggleVM serverToggleVM,
-                              ConnectionsTabVM connectionsTabVM,
                               IFileSystemAccesor fs) : base(fs)
         {
             _cfg = serverSettings;
@@ -24,8 +23,6 @@ namespace PocketHub.Server.Lib.MainWindows
 
             _togl.ServerStarted += (s, e) => AppendToCaption("Accepting Connections");
             _togl.ServerStopped += (s, e) => AppendToCaption("Connections NOT accepted");
-
-            AddAsTab(connectionsTabVM);
 
             _togl.StartServerCmd.ExecuteIfItCan();
         }

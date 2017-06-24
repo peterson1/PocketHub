@@ -13,11 +13,17 @@ namespace PocketHub.Server.Lib.MainWindows
     {
         protected override string CaptionPrefix => Title;
 
-        public MainHubWindowVM1(ActivityLogVM activityLogVM, ServerSettings serverSettings, ServerToggleVM serverToggleVM, ConnectionsTabVM connectionsTabVM, IFileSystemAccesor fs) : base(serverSettings, serverToggleVM, connectionsTabVM, fs)
+        public MainHubWindowVM1(ActivityLogVM activityLogVM, 
+                                ServerSettings serverSettings, 
+                                ServerToggleVM serverToggleVM, 
+                                ConnectionsTabVM connectionsTabVM, 
+                                IFileSystemAccesor fs) 
+            : base(serverSettings, serverToggleVM, fs)
         {
             foreach (var type in TabTypes)
                 AddAsTab(StaticRegistry.Resolve(type) as R2ViewModelBase);
 
+            AddAsTab(connectionsTabVM);
             AddAsTab(activityLogVM);
         }
 
