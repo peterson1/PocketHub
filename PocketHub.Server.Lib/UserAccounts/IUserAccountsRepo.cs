@@ -11,5 +11,6 @@ namespace PocketHub.Server.Lib.UserAccounts
         UserAccount                  FindAccount             (int userId);
         List<Tuple<uint, string>>    GetIDsAndRemarks        ();
         List<Tuple<string, string>>  GetFullNamesAndRemarks  ();
+        Dictionary<uint, string>     GetFullNamesDictionary  ();
     }
 }
