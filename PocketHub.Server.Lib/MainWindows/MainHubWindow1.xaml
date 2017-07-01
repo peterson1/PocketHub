@@ -52,8 +52,7 @@
                            BusyContent="{Binding BusyText}"
                            />
 
-        <tray:TaskbarIcon IconSource="/PocketHub.Client.Lib;component/Assets/database128.ico"
-                          TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp"
+        <tray:TaskbarIcon TrayLeftMouseUp="TaskbarIcon_TrayLeftMouseUp"
                           ToolTipText="{Binding Caption}"
                           x:Name="trayIcon"
                           />

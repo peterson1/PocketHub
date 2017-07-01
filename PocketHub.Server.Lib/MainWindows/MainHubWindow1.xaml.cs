@@ -1,18 +1,24 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace PocketHub.Server.Lib.MainWindows
 {
     public partial class MainHubWindow1 : Window
     {
-        public MainHubWindow1()
+        const string DEFAULT_ICO_URI = "pack://application:,,,/PocketHub.Client.Lib;component/Assets/database128.ico";
+
+        public MainHubWindow1(string trayIconURI = null)
         {
             InitializeComponent();
 
-            //Loaded += (a, b) =>
-            //{
-            //    trayIcon.ToolTipText = VM.Caption;
-            //};
+            Loaded += (a, b) =>
+            {
+                var uri = new Uri(trayIconURI ?? DEFAULT_ICO_URI);
+                trayIcon.IconSource = new BitmapImage(uri);
+            };
+            //trayIcon.ico
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
