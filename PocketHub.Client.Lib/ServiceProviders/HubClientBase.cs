@@ -76,7 +76,9 @@ namespace PocketHub.Client.Lib.ServiceProviders
         {
             if (IsConnected) return Reply.Success();
 
-            Disconnect();
+            //Disconnect();
+            _hub = null;
+            _conn = null;
 
             SetStatus($"Connecting to [{url}] as “{usr}” ...");
             var tkn = ComposeAuthToken(usr, rawPassword, sharedKey);
