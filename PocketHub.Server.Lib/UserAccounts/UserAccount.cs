@@ -1,9 +1,9 @@
-﻿using NullGuard;
+﻿//using NullGuard;
 using System.Collections.Generic;
 
 namespace PocketHub.Server.Lib.UserAccounts
 {
-    [NullGuard(ValidationFlags.None)]
+    //[NullGuard(ValidationFlags.None)]
     public class UserAccount
     {
         public uint          Id             { get; set; }
