@@ -80,7 +80,7 @@ namespace PocketHub.Client.Lib.ServiceProviders
             _hub = null;
             _conn = null;
 
-            SetStatus($"Connecting to [{url}] as “{usr}” ...");
+            SetStatus($"Connecting as “{usr}” to ‹{HubName}› at [{url}] ...");
             var tkn = ComposeAuthToken(usr, rawPassword, sharedKey);
 
             _conn = new HubConnection(url);
