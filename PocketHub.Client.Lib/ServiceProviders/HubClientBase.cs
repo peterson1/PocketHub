@@ -90,7 +90,7 @@ namespace PocketHub.Client.Lib.ServiceProviders
             HandleConnectionEvents();
 
             _hub = _conn.CreateHubProxy(HubName);
-            HandleHubEvents();
+            SetEventHandlers(_hub);
 
             try
             {
@@ -219,10 +219,14 @@ namespace PocketHub.Client.Lib.ServiceProviders
         }
 
 
-        private void HandleHubEvents()
+        /// <summary>
+        /// Safe to fully override because base method is empty.
+        /// </summary>
+        /// <param name="hub"></param>
+        protected virtual void SetEventHandlers(IHubProxy hub)
         {
-            _hub.On<string, string>("AddMessage", (nme, msg) 
-                => SetStatus($"[{nme}]  {msg}"));
+            //_hub.On<string, string>("AddMessage", (nme, msg) 
+            //    => SetStatus($"[{nme}]  {msg}"));
         }
 
 
