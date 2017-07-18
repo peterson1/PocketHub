@@ -41,7 +41,11 @@ namespace PocketHub.Server.Lib.ComponentRegistry
         {
             RegisterHubs();
 
-            appBuildr.MapSignalR();
+            appBuildr.MapSignalR(new HubConfiguration
+            {
+                //todo: disable on production
+                EnableDetailedErrors = true
+            });
 
             SetGlobalHostConfigurations();
         }
